@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>数学乐园 · 小学数学学习网站</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{overscroll-behavior:none;height:100%;}
+body{font-family:'Nunito','Baloo 2','PingFang SC','Microsoft YaHei',sans-serif;background:#FFFEF9;color:#1F2937;font-weight:500;line-height:1.6;}
+h1,h2,h3,h4{font-weight:800;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img,svg{display:block;}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px;}
+@media(max-width:600px){.wrap{padding:0 14px;}}
+:root{
+  --primary:#4A90D9; --primary-light:#7AB8F0; --primary-dark:#2E6BB5; --primary-soft:#E8F4FD;
+  --success:#52C41A; --warning:#FAAD14; --error:#FF4D4F;
+  --ink:#1F2937; --ink-2:#4B5563; --ink-muted:#6B7280; --ink-soft:#9CA3AF;
+  --canvas:#FFFEF9; --canvas-warm:#FFF8E7; --canvas-cool:#F0F9FF;
+  --surface:#FFFFFF; --surface-soft:#F9FAFB; --hairline:#E5E7EB;
+  --sky:#D6EAF8; --sky-d:#AED6F1; --grass:#D5F5E3; --grass-d:#ABEBC6;
+  --sun:#FEF9E7; --sun-d:#F9E79F; --straw:#FADBD8; --grape:#E8DAEF; --grape-d:#D2B4DE; --orange:#FDEBD0;
+  --star:#FFD700; --gem-p:#9B59B6;
+  --r-sm:10px; --r-md:16px; --r-lg:24px; --r-xl:32px; --r-xxl:48px; --r-pill:9999px;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+
+/* ===== 顶部导航 ===== */
+.topnav{min-height:72px;background:var(--canvas);box-shadow:0 2px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:50;display:flex;align-items:center;padding-top:var(--safe-top);}
+.topnav-inner{display:flex;align-items:center;gap:14px;width:100%;flex-wrap:nowrap;padding:10px 0;}
+.logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;color:var(--primary-dark);flex-shrink:0;}
+.logo .mascot{width:42px;height:42px;flex-shrink:0;}
+.nav-pills{display:flex;gap:8px;flex-wrap:nowrap;flex:1;overflow-x:auto;padding:4px 2px;-webkit-overflow-scrolling:touch;}
+.nav-pills::-webkit-scrollbar{display:none;}
+.pill-btn{padding:9px 18px;border-radius:var(--r-pill);font-size:15px;font-weight:700;background:var(--surface-soft);color:var(--ink-2);white-space:nowrap;transition:.15s;flex-shrink:0;}
+.pill-btn.on{color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.15);}
+.pill-btn[data-m="0"].on{background:var(--ink-2);}
+.pill-btn[data-m="1"].on{background:var(--primary);}
+.pill-btn[data-m="2"].on{background:#F5A623;}
+.pill-btn[data-m="3"].on{background:var(--success);}
+.pill-btn[data-m="4"].on{background:var(--gem-p);}
+.quiz-pill{background:linear-gradient(135deg,#FF8A8A,var(--error))!important;color:#fff!important;font-weight:800;box-shadow:0 3px 0 #C0392B!important;}
+@media(max-width:760px){.logo span.txt{display:none;}}
+@media(max-width:480px){
+  .topnav-inner{gap:8px;}
+  .logo{gap:6px;}
+  .logo .mascot{width:36px;height:36px;}
+  .pill-btn{padding:8px 14px;font-size:13.5px;}
+}
+
+/* ===== HERO ===== */
+.hero{background:var(--canvas-warm);border-radius:0 0 var(--r-xxl) var(--r-xxl);padding:56px 24px 64px;text-align:center;position:relative;overflow:hidden;}
+.hero::before,.hero::after{content:'';position:absolute;border-radius:50%;opacity:.5;}
+.hero::before{width:180px;height:180px;background:var(--sky-d);top:-60px;left:-40px;}
+.hero::after{width:140px;height:140px;background:var(--sun-d);bottom:-40px;right:-20px;}
+.hero-inner{position:relative;z-index:2;max-width:800px;margin:0 auto;}
+.hero h1{font-size:clamp(28px,6vw,56px);font-weight:800;letter-spacing:-.5px;color:var(--ink);margin-bottom:14px;word-break:break-word;}
+.hero h1 .hl{color:var(--primary);}
+.hero p{font-size:16px;color:var(--ink-2);font-weight:600;margin-bottom:28px;}
+.hero-stats{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:30px;}
+.stat-chip{background:#fff;border-radius:var(--r-pill);padding:10px 20px;font-weight:800;font-size:14px;color:var(--ink-2);box-shadow:0 3px 10px rgba(0,0,0,.06);display:flex;align-items:center;gap:6px;}
+.hero-cta{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+@media(max-width:600px){
+  .hero{padding:36px 16px 44px;border-radius:0 0 32px 32px;}
+  .hero p{font-size:14px;margin-bottom:20px;}
+  .stat-chip{font-size:12.5px;padding:8px 14px;}
+}
+
+.btn-bubble{border-radius:var(--r-pill);font-weight:700;font-size:18px;padding:16px 38px;transition:transform .1s,box-shadow .1s;display:inline-flex;align-items:center;gap:8px;}
+.btn-bubble:active{transform:translateY(2px);}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 0 var(--primary-dark);}
+.btn-primary:active{box-shadow:0 2px 0 var(--primary-dark);}
+.btn-outline{background:#fff;color:var(--primary);border:3px solid var(--primary);}
+.btn-warning{background:var(--warning);color:var(--ink);box-shadow:0 4px 0 #D48806;font-size:16px;padding:12px 28px;}
+.btn-warning:active{box-shadow:0 2px 0 #D48806;}
+@media(max-width:480px){.btn-bubble{font-size:15px;padding:13px 26px;}}
+
+/* ===== 模块彩色分区 ===== */
+.section{padding:56px 0;}
+.section-head{text-align:center;margin-bottom:32px;}
+.section-head h2{font-size:clamp(22px,4vw,36px);color:var(--ink);margin-bottom:8px;}
+.section-head p{color:var(--ink-muted);font-weight:600;font-size:14px;}
+.mod-block{border-radius:var(--r-xxl);padding:36px 24px;margin-bottom:28px;}
+.mod-block.m1{background:var(--sky);} .mod-block.m2{background:var(--sun);}
+.mod-block.m3{background:var(--grass);} .mod-block.m4{background:var(--grape);}
+.mod-head{display:flex;align-items:center;gap:14px;margin-bottom:22px;flex-wrap:wrap;}
+.mod-head .icon-circle{width:56px;height:56px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 3px 10px rgba(0,0,0,.08);flex-shrink:0;}
+.mod-head h3{font-size:22px;color:var(--ink);}
+.mod-head .cnt{margin-left:auto;background:rgba(255,255,255,.7);border-radius:var(--r-pill);padding:6px 16px;font-weight:800;font-size:13px;color:var(--ink-2);}
+@media(max-width:600px){
+  .section{padding:32px 0;}
+  .mod-block{padding:22px 14px;border-radius:28px;margin-bottom:18px;}
+  .mod-head .icon-circle{width:44px;height:44px;font-size:22px;}
+  .mod-head h3{font-size:18px;}
+}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
+@media(max-width:480px){.card-grid{grid-template-columns:1fr 1fr;gap:10px;}}
+.kcard{background:#fff;border-radius:var(--r-xl);overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.08);cursor:pointer;transition:.15s;position:relative;}
+.kcard:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.14);}
+.kcard:active{transform:scale(.97);}
+.kcard-thumb{aspect-ratio:16/10;overflow:hidden;position:relative;background:#f5f5f5;}
+.kcard-thumb svg{width:100%;height:100%;}
+.kcard-num{position:absolute;top:8px;left:8px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--ink-2);box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.kcard-star{position:absolute;top:8px;right:8px;font-size:20px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3));}
+.kcard-done{position:absolute;bottom:8px;right:8px;background:var(--success);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:var(--r-pill);}
+.kcard-body{padding:12px 14px 14px;}
+@media(max-width:480px){.kcard-body{padding:9px 10px 11px;}}
+.kcard-title{font-size:14.5px;font-weight:800;color:var(--ink);line-height:1.35;margin-bottom:6px;}
+@media(max-width:480px){.kcard-title{font-size:12.5px;margin-bottom:4px;}}
+.kcard-tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:var(--r-pill);}
+@media(max-width:480px){.kcard-tag{font-size:9.5px;padding:2px 8px;}}
+.kcard-tag.m1{background:var(--sky);color:var(--primary-dark);}
+.kcard-tag.m2{background:var(--sun-d);color:#8a6100;}
+.kcard-tag.m3{background:var(--grass-d);color:#1e7d32;}
+.kcard-tag.m4{background:var(--grape-d);color:#6c2e8c;}
+
+footer{background:var(--canvas-cool);color:var(--ink-muted);padding:48px 24px;text-align:center;font-weight:600;font-size:14px;}
+footer .mascot-mini{width:40px;margin:0 auto 12px;}
+
+/* =====================================================
+   学习弹层 —— 桌面端：左右分栏布局
+   ===================================================== */
+#modal{position:fixed;inset:0;background:rgba(20,25,45,.6);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(3px);}
+#modal.show{display:flex;}
+.modal-card{background:#EEF3FB;border-radius:var(--r-xl);width:100%;max-width:1280px;height:100%;max-height:860px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);position:relative;}
+
+.m-header{display:flex;align-items:center;gap:10px;padding:14px 20px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.06);flex-shrink:0;z-index:5;}
+.m-header .m-badge{background:var(--primary-soft);color:var(--primary-dark);border-radius:var(--r-pill);padding:6px 14px;font-weight:800;font-size:13px;white-space:nowrap;}
+.m-header .m-title{font-size:17px;font-weight:800;color:var(--ink);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.m-header button.icon-btn{width:38px;height:38px;border-radius:50%;background:var(--surface-soft);color:var(--ink-2);font-size:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.m-header button.icon-btn:hover{background:var(--hairline);}
+
+.m-content{flex:1;display:flex;overflow:hidden;min-height:0;}
+
+/* 左侧：图片查看区 */
+.viewer-col{width:46%;flex-shrink:0;background:#F3F6FC;position:relative;display:flex;flex-direction:column;border-right:1px solid var(--hairline);min-height:0;}
+.viewer-wrap{flex:1;position:relative;overflow:hidden;touch-action:none;min-height:0;}
+.viewer-stage{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;}
+.viewer-canvas{transform-origin:center center;transition:transform .05s linear;will-change:transform;width:100%;}
+.viewer-canvas.snap{transition:transform .25s ease;}
+.viewer-canvas svg{display:block;width:100%;height:auto;background:#fff;border-radius:var(--r-lg);box-shadow:0 6px 24px rgba(0,0,0,.12);}
+.zoom-ctrl{position:absolute;right:14px;bottom:14px;display:flex;flex-direction:column;gap:7px;z-index:6;}
+.zoom-ctrl button{width:40px;height:40px;border-radius:50%;background:#fff;font-size:19px;font-weight:800;color:var(--ink-2);box-shadow:0 2px 8px rgba(0,0,0,.18);}
+.zoom-ctrl button:hover{background:var(--primary-soft);color:var(--primary-dark);}
+.side-arrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:68px;border-radius:var(--r-md);background:rgba(0,0,0,.08);color:var(--ink-2);font-size:24px;display:flex;align-items:center;justify-content:center;z-index:6;}
+.side-arrow:hover{background:rgba(0,0,0,.16);}
+#prevBtn{left:10px;} #nextBtn{right:10px;}
+.zoom-hint-desktop{text-align:center;padding:8px 0;color:var(--ink-soft);font-size:12px;font-weight:700;background:#fff;flex-shrink:0;}
+
+.mascot-strip{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:#fff;border-top:1px solid var(--hairline);flex-shrink:0;}
+.mascot-strip .mm{width:38px;height:38px;flex-shrink:0;}
+.mascot-bubble{background:var(--primary-soft);border-radius:var(--r-lg);padding:9px 15px;font-size:13px;font-weight:700;color:var(--primary-dark);flex:1;}
+
+/* 右侧：内容区 —— 关键修复：min-height:0 保证 flex 子项能正确滚动 */
+.content-col{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0;}
+.tabs{display:flex;background:#fff;border-bottom:1px solid var(--hairline);flex-shrink:0;}
+.tabs button{flex:1;padding:15px 6px;font-size:14px;font-weight:800;background:transparent;color:var(--ink-soft);white-space:nowrap;border-bottom:3px solid transparent;}
+.tabs button.on{color:var(--primary);border-bottom-color:var(--primary);background:var(--primary-soft);}
+.tabs button:hover:not(.on){background:var(--surface-soft);}
+.tab-body-wrap{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--canvas);min-height:0;overscroll-behavior:contain;}
+.tab-body{padding:22px 26px 30px;font-size:15px;line-height:1.85;}
+.tab-body h4{color:var(--primary-dark);margin:14px 0 8px;font-size:16px;font-weight:800;}
+.tab-body h4:first-child{margin-top:0;}
+.kp-list{list-style:none;}
+.kp-list li{background:#fff;border-radius:var(--r-md);padding:12px 16px;margin-bottom:8px;box-shadow:0 2px 6px rgba(0,0,0,.05);position:relative;padding-left:36px;}
+.kp-list li::before{content:'★';position:absolute;left:12px;top:12px;color:var(--star);font-size:15px;}
+.ex-card{background:var(--primary-soft);border-radius:var(--r-lg);padding:16px 18px;margin-bottom:14px;}
+.ex-card .q{font-weight:800;color:var(--ink);margin-bottom:8px;}
+.ex-card .s div{padding:3px 0;color:var(--ink-2);font-weight:600;font-size:14px;}
+.pr-card{background:#fff;border:2px solid var(--hairline);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:12px;}
+.pr-card .q{color:var(--ink);font-weight:700;}
+.pr-card .q b.star{color:#E65100;}
+.pr-card button.reveal{background:var(--primary-soft);color:var(--primary-dark);border-radius:var(--r-pill);padding:6px 16px;font-size:13px;font-weight:800;margin-top:8px;}
+.pr-card button.reveal:hover{background:var(--primary);color:#fff;}
+.pr-card .ans{display:none;margin-top:10px;background:var(--grass);border-radius:var(--r-md);padding:10px 14px;color:#1B5E20;font-weight:700;font-size:14px;}
+.pr-card .ans.show{display:block;}
+.tip-card{background:var(--sun);border-radius:var(--r-lg);padding:12px 16px;margin-bottom:10px;color:#7a5c12;font-weight:700;}
+.warn-card{background:var(--straw);border-radius:var(--r-lg);padding:12px 16px;margin-bottom:10px;color:#912121;font-weight:700;}
+
+.m-footer{flex-shrink:0;background:#fff;border-top:1px solid var(--hairline);padding:12px 20px;}
+.progress-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.progress-row input[type=range]{flex:1;accent-color:var(--primary);}
+.progress-row span{font-size:12px;color:var(--ink-muted);font-weight:800;white-space:nowrap;}
+.action-row{display:flex;gap:10px;}
+.action-row button{flex:1;border-radius:var(--r-pill);padding:12px;font-size:14px;font-weight:800;}
+.btn-done{background:var(--grass);color:#2E7D32;}
+.btn-done:hover{background:#c5edd4;}
+.btn-done.on{background:var(--success);color:#fff;box-shadow:0 3px 0 #389E0D;}
+.btn-star{background:var(--sun);color:#E65100;}
+.btn-star:hover{background:#fcedc0;}
+.btn-star.on{background:var(--star);color:#7a5c00;box-shadow:0 3px 0 #C99A00;}
+
+.swipe-hint-mobile{display:none;}
+
+/* =====================================================
+   移动端布局：改为上下堆叠、全屏、触摸优先
+   关键修复点：
+   1. modal-card 用 100dvh（动态视口高度）避免地址栏遮挡
+   2. 每一层 flex 容器都显式 min-height:0，否则内容区无法滚动
+   3. tab-body-wrap 独立可滚动，footer 用 safe-area 适配
+   ===================================================== */
+@media(max-width:860px){
+  #modal{padding:0;}
+  .modal-card{
+    border-radius:0;
+    max-width:none;
+    max-height:none;
+    height:100vh;
+    height:100dvh;
+  }
+  .m-header{padding-top:calc(10px + var(--safe-top));flex-shrink:0;}
+  .m-content{
+    flex-direction:column;
+    flex:1 1 auto;
+    min-height:0;
+    overflow:hidden;
+  }
+  .viewer-col{
+    width:100%;
+    height:34vh;
+    min-height:190px;
+    max-height:280px;
+    flex:0 0 auto;
+    border-right:none;
+    border-bottom:1px solid var(--hairline);
+  }
+  .zoom-hint-desktop{display:none;}
+  .swipe-hint-mobile{display:block;text-align:center;color:var(--ink-soft);font-size:11px;padding:5px 0;background:#fff;font-weight:700;flex-shrink:0;}
+  .mascot-strip{padding:8px 14px;flex-shrink:0;}
+  .mascot-bubble{font-size:12px;padding:8px 13px;}
+
+  /* 内容列必须是 flex 且 min-height:0，才能让 tab-body-wrap 正确滚动 */
+  .content-col{
+    flex:1 1 auto;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  .tabs{flex-shrink:0;}
+  .tabs button{padding:12px 4px;font-size:12.5px;}
+  .tab-body-wrap{
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .tab-body{padding:16px 16px 24px;font-size:14px;}
+
+  .m-footer{
+    flex:0 0 auto;
+    padding:10px 16px calc(10px + var(--safe-bottom));
+  }
+  #prevBtn,#nextBtn{width:36px;height:56px;font-size:20px;}
+  .zoom-ctrl button{width:36px;height:36px;font-size:16px;}
+}
+@media(min-width:861px){
+  .side-arrow{display:flex;}
+}
+
+/* ===== 星星弹出动画 ===== */
+.star-pop{position:fixed;pointer-events:none;font-size:32px;z-index:999;animation:starpop .8s ease forwards;}
+@keyframes starpop{0%{transform:translateY(0) scale(0.5);opacity:1;}60%{transform:translateY(-60px) scale(1.3);opacity:1;}100%{transform:translateY(-100px) scale(0.8);opacity:0;}}
+
+/* ===== 组卷弹层 ===== */
+#quizModal{position:fixed;inset:0;background:rgba(30,35,60,.55);z-index:300;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;backdrop-filter:blur(4px);}
+#quizModal.show{display:block;}
+.quiz-inner{max-width:880px;margin:24px auto;padding:0 16px 60px;}
+.quiz-top{display:flex;justify-content:space-between;align-items:center;color:#fff;padding:10px 4px 20px;}
+.quiz-top h2{font-size:24px;}
+.quiz-top button{background:rgba(255,255,255,.2);color:#fff;border-radius:var(--r-pill);padding:10px 18px;font-weight:800;}
+.quiz-config{background:#fff;border-radius:var(--r-xl);padding:26px;margin-bottom:18px;box-shadow:0 10px 30px rgba(0,0,0,.15);}
+.quiz-config label{display:block;margin-bottom:10px;font-size:15px;color:var(--ink-2);font-weight:800;}
+.quiz-config .opts{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px;}
+.quiz-config .opts button{border:2px solid var(--hairline);background:#fff;border-radius:var(--r-pill);padding:9px 18px;font-size:13.5px;font-weight:700;color:var(--ink-2);}
+.quiz-config .opts button.on{background:var(--primary);border-color:var(--primary);color:#fff;}
+.gen-btn{width:100%;}
+#paperArea{background:#fff;border-radius:var(--r-xl);padding:28px;display:none;box-shadow:0 10px 30px rgba(0,0,0,.15);}
+#paperArea.show{display:block;}
+.paper-title{text-align:center;margin-bottom:8px;}
+.paper-title h3{font-size:22px;}
+.paper-title p{font-size:13px;color:var(--ink-muted);margin-top:6px;font-weight:700;}
+.paper-info{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2);border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px;font-weight:700;flex-wrap:wrap;gap:8px;}
+.paper-q{margin-bottom:16px;font-size:14.5px;line-height:1.8;}
+.paper-q .qn{font-weight:800;color:var(--ink);}
+.paper-q .src{color:var(--ink-soft);font-size:11px;margin-left:6px;}
+.paper-actions{display:flex;gap:10px;margin-top:24px;}
+.paper-actions button{flex:1;padding:14px;border-radius:var(--r-pill);font-size:14.5px;font-weight:800;}
+.answer-sheet{display:none;margin-top:20px;background:var(--primary-soft);border-radius:var(--r-md);padding:16px;}
+.answer-sheet.show{display:block;}
+.answer-sheet div{padding:4px 0;font-size:13.5px;color:var(--ink);font-weight:700;}
+@media print{
+  body *{visibility:hidden;}
+  #paperArea,#paperArea *{visibility:visible;}
+  #paperArea{position:absolute;left:0;top:0;width:100%;padding:10px;box-shadow:none;}
+  .paper-actions{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="topnav"><div class="wrap topnav-inner">
+  <div class="logo">
+    <svg class="mascot" viewBox="0 0 60 60"><circle cx="30" cy="32" r="22" fill="#4A90D9"/><circle cx="22" cy="28" r="5" fill="#fff"/><circle cx="38" cy="28" r="5" fill="#fff"/><circle cx="22" cy="29" r="2.5" fill="#1F2937"/><circle cx="38" cy="29" r="2.5" fill="#1F2937"/><path d="M20,40 Q30,48 40,40" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="12" y="10" width="36" height="10" rx="3" fill="#2E6BB5"/><rect x="24" y="4" width="12" height="8" rx="2" fill="#2E6BB5"/></svg>
+    <span class="txt">数学乐园</span>
+  </div>
+  <div class="nav-pills" id="nav">
+    <button class="pill-btn on" data-m="0">🌈 全部</button>
+    <button class="pill-btn" data-m="1">🔷 数与代数</button>
+    <button class="pill-btn" data-m="2">🟠 数的运算</button>
+    <button class="pill-btn" data-m="3">🟢 图形几何</button>
+    <button class="pill-btn" data-m="4">🟣 统计思想</button>
+    <button class="pill-btn quiz-pill" onclick="openQuiz()">📝 组卷</button>
+  </div>
+</div></div>
+
+<div class="hero"><div class="hero-inner">
+  <h1>欢迎来到 <span class="hl">数学乐园</span> 🎉</h1>
+  <p>40个知识点 · 好玩的图解 · 边学边玩边闯关，让数学变成一场冒险！</p>
+  <div class="hero-stats">
+    <span class="stat-chip">📚 40 个知识点</span>
+    <span class="stat-chip">⭐ <span id="starCountTop">0</span> 颗收集星星</span>
+    <span class="stat-chip">✅ <span id="doneCountTop">0</span>/40 已掌握</span>
+  </div>
+  <div class="hero-cta">
+    <button class="btn-bubble btn-primary" onclick="openModal(0)">🚀 开始学习</button>
+    <button class="btn-bubble btn-outline" onclick="openQuiz()">📝 挑战测验</button>
+  </div>
+</div></div>
+
+<div class="wrap">
+<div class="section">
+  <div class="section-head"><h2>知识大冒险地图</h2><p>点击任意知识卡片，进入沉浸式学习模式（含要点·例题·练习·技巧）</p></div>
+
+  <div class="mod-block m1" data-modblock="1">
+    <div class="mod-head"><div class="icon-circle">🔢</div><h3>① 数与代数认识</h3><span class="cnt">13 个知识点</span></div>
+    <div class="card-grid" id="grid1"></div>
+  </div>
+
+  <div class="mod-block m2" data-modblock="2">
+    <div class="mod-head"><div class="icon-circle">➗</div><h3>② 数的运算</h3><span class="cnt">14 个知识点</span></div>
+    <div class="card-grid" id="grid2"></div>
+  </div>
+
+  <div class="mod-block m3" data-modblock="3">
+    <div class="mod-head"><div class="icon-circle">📐</div><h3>③ 图形与几何</h3><span class="cnt">9 个知识点</span></div>
+    <div class="card-grid" id="grid3"></div>
+  </div>
+
+  <div class="mod-block m4" data-modblock="4">
+    <div class="mod-head"><div class="icon-circle">📊</div><h3>④ 计量·统计·思想方法</h3><span class="cnt">4 个知识点</span></div>
+    <div class="card-grid" id="grid4"></div>
+  </div>
+</div>
+</div>
+
+<footer>
+  <svg class="mascot-mini" viewBox="0 0 60 60"><circle cx="30" cy="32" r="22" fill="#7AB8F0"/><circle cx="22" cy="28" r="5" fill="#fff"/><circle cx="38" cy="28" r="5" fill="#fff"/><path d="M20,40 Q30,46 40,40" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+  <p>数学乐园 · 纯 HTML+SVG 手工绘制 · 点击卡片开启学习之旅 ✨</p>
+</footer>
+
+<!-- 学习弹层 -->
+<div id="modal">
+<div class="modal-card">
+  <div class="m-header">
+    <span class="m-badge" id="mNo"></span>
+    <span class="m-title" id="mTitle"></span>
+    <button class="icon-btn" onclick="dlPNG(cur)">⬇</button>
+    <button class="icon-btn" onclick="closeModal()">✕</button>
+  </div>
+  <div class="m-content">
+    <div class="viewer-col">
+      <div class="viewer-wrap" id="viewerWrap">
+        <div class="viewer-stage"><div class="viewer-canvas" id="viewerCanvas"></div></div>
+        <button class="side-arrow" id="prevBtn">‹</button>
+        <button class="side-arrow" id="nextBtn">›</button>
+        <div class="zoom-ctrl">
+          <button onclick="zoomBy(1.3)">＋</button>
+          <button onclick="zoomBy(1/1.3)">－</button>
+          <button onclick="resetZoom()" style="font-size:10px;">还原</button>
+        </div>
+      </div>
+      <div class="zoom-hint-desktop">🖱️ 滚轮缩放 · 拖拽已放大图片 · 双击放大/还原 · 左右箭头翻页</div>
+      <div class="swipe-hint-mobile">👈 左右滑动图片翻页 · 双指缩放 · 双击放大 👉</div>
+      <div class="mascot-strip">
+        <svg class="mm" viewBox="0 0 60 60"><circle cx="30" cy="32" r="22" fill="#4A90D9"/><circle cx="22" cy="28" r="5" fill="#fff"/><circle cx="38" cy="28" r="5" fill="#fff"/><circle cx="22" cy="29" r="2.5" fill="#1F2937"/><circle cx="38" cy="29" r="2.5" fill="#1F2937"/><path d="M20,40 Q30,48 40,40" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+        <div class="mascot-bubble" id="mascotMsg">数小萌：一起来学习这个知识点吧！</div>
+      </div>
+    </div>
+    <div class="content-col">
+      <div class="tabs" id="mTabs"></div>
+      <div class="tab-body-wrap" id="tabBodyWrap"><div class="tab-body" id="mBody"></div></div>
+      <div class="m-footer">
+        <div class="progress-row">
+          <span id="progLeft">1</span>
+          <input type="range" id="progSlider" min="0" max="39" value="0">
+          <span id="progRight">40</span>
+        </div>
+        <div class="action-row">
+          <button class="btn-done" id="doneBtn" onclick="toggleDone()">☐ 标记已掌握</button>
+          <button class="btn-star" id="starBtn" onclick="toggleStar()">☆ 收藏难点</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 组卷弹层 -->
+<div id="quizModal">
+  <div class="quiz-inner">
+    <div class="quiz-top"><h2>📝 一键组卷</h2><button onclick="closeQuiz()">✕ 关闭</button></div>
+    <div class="quiz-config">
+      <label>1️⃣ 选择模块（可多选）</label>
+      <div class="opts" id="modOpts"></div>
+      <label>2️⃣ 每个知识点抽题数量</label>
+      <div class="opts" id="numOpts">
+        <button data-n="1">1题/点</button>
+        <button data-n="2" class="on">2题/点</button>
+        <button data-n="3">3题/点</button>
+      </div>
+      <label>3️⃣ 是否包含★挑战题</label>
+      <div class="opts" id="starOpts">
+        <button data-s="1" class="on">包含</button>
+        <button data-s="0">不包含</button>
+      </div>
+      <button class="btn-bubble btn-primary gen-btn" onclick="generatePaper()">🎲 生成试卷</button>
+    </div>
+    <div id="paperArea">
+      <div class="paper-title"><h3>小学数学测试卷</h3><p id="paperSub"></p></div>
+      <div class="paper-info"><span>姓名：_________</span><span>班级：_________</span><span>得分：_________</span></div>
+      <div id="paperQs"></div>
+      <div class="paper-actions">
+        <button class="btn-bubble btn-primary" onclick="window.print()">🖨️ 打印试卷</button>
+        <button class="btn-bubble btn-warning" onclick="toggleAnswer()">✅ 查看/隐藏答案</button>
+      </div>
+      <div class="answer-sheet" id="answerSheet"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- 通用绘图工具 ---------- */
+const T=(x,y,s,size=18,fill='#333',anchor='middle',bold=false)=>`<text x="${x}" y="${y}" font-size="${size}" fill="${fill}" text-anchor="${anchor}" ${bold?'font-weight="bold"':''}>${s}</text>`;
+const P=(cx,cy,r,a)=>[cx+r*Math.cos(a*Math.PI/180), cy+r*Math.sin(a*Math.PI/180)];
+const sector=(cx,cy,r,a0,a1,fill,stroke='#888')=>{const [x0,y0]=P(cx,cy,r,a0),[x1,y1]=P(cx,cy,r,a1);const large=(a1-a0)>180?1:0;return `<path d="M${cx},${cy} L${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${large} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;};
+const arrow=(x1,y1,x2,y2,color='#E53935',wd=3)=>{const a=Math.atan2(y2-y1,x2-x1),h=12;const p1=[x2-h*Math.cos(a-0.4),y2-h*Math.sin(a-0.4)],p2=[x2-h*Math.cos(a+0.4),y2-h*Math.sin(a+0.4)];return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${wd}"/><polygon points="${x2},${y2} ${p1[0].toFixed(1)},${p1[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}" fill="${color}"/>`;};
+const dots=(x,y,n,perRow,gap,r,fill,stroke='none')=>{let s='';for(let i=0;i<n;i++)s+=`<circle cx="${x+(i%perRow)*gap}" cy="${y+Math.floor(i/perRow)*gap}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;return s;};
+const apple=(x,y,r=13)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#EF5350"/><ellipse cx="${x+5}" cy="${y-r-2}" rx="6" ry="3" fill="#66BB6A" transform="rotate(-30 ${x+5} ${y-r-2})"/><line x1="${x}" y1="${y-r}" x2="${x}" y2="${y-r-6}" stroke="#795548" stroke-width="2"/>`;
+const frac=(x,y,n,d,s=26,color='#E65100')=>T(x,y-s*0.3,n,s,color,'middle',true)+`<line x1="${x-s*0.85}" y1="${y}" x2="${x+s*0.85}" y2="${y}" stroke="${color}" stroke-width="3"/>`+T(x,y+s*1.05,d,s,color,'middle',true);
+const rrect=(x,y,w,h,fill,rx=12,stroke='none',sw=0)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}"/>`;
+const box3d=(x,y,w,h,d)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#BBDEFB" stroke="#455A64" stroke-width="2"/><polygon points="${x},${y} ${x+d},${y-d} ${x+w+d},${y-d} ${x+w},${y}" fill="#90CAF9" stroke="#455A64" stroke-width="2"/><polygon points="${x+w},${y} ${x+w+d},${y-d} ${x+w+d},${y+h-d} ${x+w},${y+h}" fill="#64B5F6" stroke="#455A64" stroke-width="2"/>`;
+const MC=['#455A64','#4A90D9','#F5A623','#52C41A','#9B59B6'];
+const MODNAMES=['','数与代数认识','数的运算','图形与几何','计量·统计·思想'];
+
+/* ---------- 40 张卡片数据 ---------- */
+const cards=[];
+cards.push({m:1,t:'认识 1~10：数与实物对应',f:()=>{let s='';for(let i=1;i<=10;i++){const x=58+(i-1)*74;s+=T(x,110,i,34,'#1E88E5','middle',true);for(let k=0;k<i;k++) s+=apple(x-14+(k%2)*28, 155+Math.floor(k/2)*46, 11);}return s+T(400,440,'每个数字对应几个苹果，数一数！',16,'#789');},ext:{
+kp:['数表示物体的个数：3个苹果、3只小鸟、3支铅笔都可以用"3"表示','数数要"一个一个点着数"，不重复、不遗漏','0表示一个也没有','10个一是1个十'],
+ex:[{q:'例1：盘子里有●●●●●●●个草莓，用数字几表示？',s:['一个一个点着数：1、2、3、4、5、6、7','一共7个，用数字 7 表示']},{q:'例2：按顺序填数：3、4、（ ）、6、（ ）、8',s:['从3开始一个一个往后数：3、4、5、6、7、8','括号里填 5 和 7']}],
+pr:[{q:'1. 数一数你的左手有几根手指？用数字表示。',a:'5'},{q:'2. 比6大1的数是几？比6小1的数是几？',a:'比6大1是7；比6小1是5'},{q:'3. 从小到大排列：8、2、10、5',a:'2 ＜ 5 ＜ 8 ＜ 10'},{q:'4. 空盘子里有几个苹果？用哪个数字表示？',a:'一个也没有，用 0 表示'},{q:'5. ★挑战：10、8、6、（ ）、2，括号里填几？',a:'4（每次少2，倒着两个两个数）',star:1}],
+tip:['数数时用手指点着数，数到最后一个数就是总数','找"相邻数"：一个数的前面是它减1，后面是它加1'],warn:['0也是一个数！表示"没有"，不能漏掉它']}});
+
+cards.push({m:1,t:'数的分与合',f:()=>{const tree=(cx,l,r)=>`<circle cx="${cx}" cy="130" r="36" fill="#FFCC80" stroke="#FB8C00" stroke-width="3"/>${T(cx,140,'5',30,'#333','middle',true)}<line x1="${cx-16}" y1="160" x2="${cx-66}" y2="228" stroke="#FB8C00" stroke-width="3"/><line x1="${cx+16}" y1="160" x2="${cx+66}" y2="228" stroke="#FB8C00" stroke-width="3"/><circle cx="${cx-70}" cy="258" r="30" fill="#B3E5FC"/>${T(cx-70,267,l,26,'#333','middle',true)}<circle cx="${cx+70}" cy="258" r="30" fill="#B3E5FC"/>${T(cx+70,267,r,26,'#333','middle',true)}`;let candy='';[[600,160],[650,160]].forEach(p=>candy+=`<circle cx="${p[0]}" cy="${p[1]}" r="15" fill="#F48FB1" stroke="#EC407A" stroke-width="2"/>`);[[590,250],[640,250],[690,250]].forEach(p=>candy+=`<circle cx="${p[0]}" cy="${p[1]}" r="15" fill="#CE93D8" stroke="#AB47BC" stroke-width="2"/>`);return tree(190,'1','4')+tree(430,'2','3')+candy+T(640,120,'5颗糖分成两堆',15,'#789')+T(640,205,'2 颗  和  3 颗',15,'#789')+T(400,360,'5 可以分成 1 和 4，也可以分成 2 和 3',20,'#E65100','middle',true)+T(400,400,'（还有 0 和 5 哦）',14,'#999');},ext:{
+kp:['一个数可以分成两个部分，两个部分也能合成这个数','分与合是加减法的基础：5分成2和3 → 2+3=5、5-2=3','有序地分才不会漏：5=0+5=1+4=2+3'],
+ex:[{q:'例1：把6分成两堆，有哪几种分法？',s:['按顺序分：6=1和5，6=2和4，6=3和3','（1和5、5和1算同一种）共3种分法（不含0）']},{q:'例2：8可以分成3和几？',s:['想：3和几合成8？','因为3+5=8，所以8可以分成3和5']}],
+pr:[{q:'1. 7可以分成2和几？',a:'5'},{q:'2. 9可以分成4和几？6和几？',a:'4和5；6和3'},{q:'3. （ ）和4合成10',a:'6'},{q:'4. 把10分成两堆，不含0共有几种分法？',a:'5种：1和9、2和8、3和7、4和6、5和5'},{q:'5. ★挑战：三个小朋友分6颗糖，每人至少1颗，可以怎么分？',a:'1,1,4 / 1,2,3 / 2,2,2（三个数合起来是6）',star:1}],
+tip:['背熟"凑十"组合：1和9、2和8、3和7、4和6、5和5，以后算加减飞快'],warn:['分的时候要按顺序（1开头、2开头……），乱分容易漏掉']}});
+
+cards.push({m:1,t:'数位与计数单位（计数器）',f:()=>{let s=`<rect x="210" y="388" width="430" height="20" rx="8" fill="#8D6E63"/>`;const rods=[[270,'千位',2,'#EF5350'],[370,'百位',3,'#FB8C00'],[470,'十位',5,'#43A047'],[570,'个位',8,'#1E88E5']];rods.forEach(([x,lab,n,c])=>{s+=`<line x1="${x}" y1="130" x2="${x}" y2="388" stroke="#A1887F" stroke-width="6"/>`;for(let k=0;k<n;k++) s+=`<circle cx="${x}" cy="${372-k*27}" r="13" fill="${c}" stroke="#fff" stroke-width="2"/>`;s+=T(x,432,lab,17,'#555','middle',true);});return s+T(115,220,'2358',44,'#1E88E5','middle',true)+T(115,260,'读作：',15,'#789')+T(115,285,'二千三百五十八',15,'#789')+T(710,200,'2个千',15,'#EF5350')+T(710,230,'3个百',15,'#FB8C00')+T(710,260,'5个十',15,'#43A047')+T(710,290,'8个一',15,'#1E88E5');},ext:{
+kp:['计数单位：一（个）、十、百、千……相邻单位间进率是10','数位：数字所占的位置，从右起第一位是个位、第二位是十位……','同一个数字在不同数位上，表示的大小不同：22中，左边的2表示2个十，右边的2表示2个一'],
+ex:[{q:'例1：4067中的"4"和"6"各表示什么？',s:['4在千位，表示4个千（4000）','6在十位，表示6个十（60）','0在百位表示一个百也没有，起占位作用']},{q:'例2：一个数由5个千、3个十组成，这个数是多少？',s:['千位写5，十位写3','百位和个位没有，用0占位','这个数是 5030']}],
+pr:[{q:'1. 706中的7在什么位上？表示什么？',a:'百位，表示7个百（700）'},{q:'2. 写出：三千零五十 =？',a:'3050'},{q:'3. 8888中，从左往右每个8分别表示多少？',a:'8个千、8个百、8个十、8个一'},{q:'4. 由9个百和9个一组成的数是？',a:'909'},{q:'5. ★挑战：用3、0、0、8组成最大和最小的四位数。',a:'最大8300；最小3008（0不能开头）',star:1}],
+tip:['读数口诀：从高位读起，中间有一个0或连续几个0都只读一个"零"，末尾的0不读'],warn:['写数时"哪一位没有就写0占位"，三千零五十写成350就错了！']}});
+
+cards.push({m:1,t:'数级阶梯：从一到亿',f:()=>{const labels=['一','十','百','千','万','十万','百万','千万','亿'];let s='';labels.forEach((lab,i)=>{const x=55+i*77, top=395-i*34;s+=`<rect x="${x}" y="${top}" width="72" height="${440-top}" fill="hsl(${210-i*14},70%,${80-i*3}%)" stroke="#fff" stroke-width="2" rx="4"/>`;s+=T(x+36,top+24,lab,i<4?18:15,'#334','middle',true);});s+=T(365,320,'🧒',36);s+=arrow(150,140,600,80,'#8E24AA',3);return s+T(380,60,'相邻两个计数单位之间的进率是 10',18,'#8E24AA','middle',true)+T(380,95,'四位一级：个级 → 万级 → 亿级',15,'#789');},ext:{
+kp:['四位一级：个级（个十百千）、万级（万十万百万千万）、亿级','读大数：先分级，从最高级读起，万级读完加"万"，亿级读完加"亿"','改写：去掉万级后面4个0加"万"字，如 250000=25万'],
+ex:[{q:'例1：读出 30400000',s:['四位分级：3040|0000','万级是3040，读作"三千零四十"','个级全是0不读，全数读作：三千零四十万']},{q:'例2：把 960000000 改写成以"亿"为单位的数',s:['9|6000|0000，取近似：9.6亿','960000000 = 9.6亿']}],
+pr:[{q:'1. 读出：5080000',a:'五百零八万'},{q:'2. 写出：一千二百万零六十',a:'12000060'},{q:'3. 70500000 = （ ）万',a:'7050万'},{q:'4. 10个一百万是多少？',a:'一千万'},{q:'5. ★挑战：一个数省略万位后面的尾数约是15万，这个数最大是多少？最小是多少？',a:'最大154999，最小145000（四舍五入的范围）',star:1}],
+tip:['读写大数前，先用铅笔从右往左"四位一分级"，画条小竖线，一下就清楚了'],warn:['"万"和"亿"是级的名字，不要写进数字里；改写(=)和省略(≈)不一样！']}});
+
+cards.push({m:1,t:'数轴与大小比较',f:()=>{let s=arrow(60,250,750,250,'#455A64',3);for(let i=0;i<=10;i++){const x=85+i*62;s+=`<line x1="${x}" y1="243" x2="${x}" y2="257" stroke="#455A64" stroke-width="2"/>`+T(x,285,i,17,'#455A64');}s+=T(85+3*62,225,'🐰',34)+T(85+7*62,222,'🐘',36);s+=arrow(300,140,620,140,'#FB8C00',3)+T(460,120,'越往右，数越大',17,'#FB8C00','middle',true);return s+T(400,375,'3 ＜ 7',40,'#E53935','middle',true)+T(400,415,'数轴上，右边的数总比左边的大',15,'#789');},ext:{
+kp:['数轴上的数从左到右越来越大','比较整数：位数多的大；位数相同，从最高位比起','比较符号：＞大于、＜小于、＝等于（开口朝大数）'],
+ex:[{q:'例1：比较 989 和 1002',s:['989是三位数，1002是四位数','位数多的数大，所以 989 ＜ 1002']},{q:'例2：比较 4652 和 4629',s:['位数相同，从最高位比：千位4=4，百位6=6','十位：5＞2，所以 4652 ＞ 4629']}],
+pr:[{q:'1. 用＞或＜连接：308 ○ 299',a:'308 ＞ 299'},{q:'2. 在数轴上，5和9哪个更靠右？',a:'9（9＞5）'},{q:'3. 从大到小排列：1010、1001、1100',a:'1100 ＞ 1010 ＞ 1001'},{q:'4. 比7大又比10小的整数有哪些？',a:'8 和 9'},{q:'5. ★挑战：135＜6□8，□可以填哪些数字使不等式成立？',a:'□可以填0~9任意数字',star:1}],
+tip:['记符号小窍门：大鱼吃小鱼，开口永远对着大的数'],warn:['比较时先数位数！位数相同才需要一位一位比']}});
+
+cards.push({m:1,t:'奇数与偶数（单数与双数）',f:()=>{let s=`<line x1="400" y1="70" x2="400" y2="400" stroke="#ddd" stroke-width="2" stroke-dasharray="6"/>`;const pair=(x,y)=>`<ellipse cx="${x+27}" cy="${y}" rx="58" ry="30" fill="none" stroke="#43A047" stroke-width="2" stroke-dasharray="5"/>`+T(x,y+10,'🦆',28)+T(x+54,y+10,'🦆',28);s+=pair(120,140)+pair(120,215)+pair(120,290);s+=`<circle cx="270" cy="300" r="26" fill="none" stroke="#E53935" stroke-width="3" stroke-dasharray="5"/>`+T(270,310,'🦆',28)+T(270,352,'落单!',14,'#E53935','middle',true);s+=T(200,395,'7 只：两两配对剩 1 只',15,'#555')+T(200,428,'7 是奇数（单数）',19,'#E53935','middle',true);s+=pair(480,140)+pair(480,215)+pair(480,290)+pair(630,215);s+=T(600,395,'8 只：刚好配完',15,'#555')+T(600,428,'8 是偶数（双数）',19,'#43A047','middle',true);return s+T(200,95,'个位是 1,3,5,7,9',14,'#999')+T(600,95,'个位是 0,2,4,6,8',14,'#999');},ext:{
+kp:['能被2整除的数是偶数，不能被2整除的是奇数','只看个位：个位是0,2,4,6,8→偶数；个位是1,3,5,7,9→奇数','0也是偶数','运算规律：偶+偶=偶，奇+奇=偶，奇+偶=奇'],
+ex:[{q:'例1：判断 3756 是奇数还是偶数',s:['只看个位：个位是6','6在0,2,4,6,8中，所以3756是偶数']},{q:'例2：两个奇数的和是奇数还是偶数？举例验证。',s:['3+5=8（偶），7+9=16（偶）','奇数+奇数=偶数']}],
+pr:[{q:'1. 判断：491、608、1000、77 哪些是奇数？',a:'491和77是奇数（个位1、7）'},{q:'2. 最小的奇数是几？最小的偶数呢？（自然数范围）',a:'最小奇数是1，最小偶数是0'},{q:'3. 奇数+偶数=？（填奇数或偶数）',a:'奇数'},{q:'4. 相邻的两个自然数，一定是一奇一偶吗？',a:'是的，奇偶交替出现'},{q:'5. ★挑战：1+2+3+…+10 的和是奇数还是偶数？不用算出结果。',a:'其中奇数有5个，奇数个奇数相加是奇数，加上偶数不变，和是奇数（55）',star:1}],
+tip:['判断奇偶只看个位，不管这个数有多大'],warn:['0是偶数，别忘了它！']}});
+
+cards.push({m:1,t:'因数与倍数',f:()=>{let s=`<circle cx="230" cy="245" r="42" fill="#FFB74D" stroke="#F57C00" stroke-width="3"/>`+T(230,255,'12',28,'#fff','middle',true);const fac=[1,2,3,4,6,12];fac.forEach((v,i)=>{const [x,y]=P(230,245,118,i*60-90);s+=`<line x1="${230+42*Math.cos((i*60-90)*Math.PI/180)}" y1="${245+42*Math.sin((i*60-90)*Math.PI/180)}" x2="${x}" y2="${y}" stroke="#FFB74D" stroke-width="2"/>`;s+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="27" fill="#FFF3E0" stroke="#FB8C00" stroke-width="2"/>`+T(x,y+8,v,20,'#E65100','middle',true);});s+=T(230,430,'12 的因数：1, 2, 3, 4, 6, 12',16,'#E65100','middle',true);[12,24,36,48].forEach((v,i)=>{const x=505+i*72;s+=rrect(x-28,215,56,56,'#E3F2FD',10,'#1E88E5',2)+T(x,250,v,19,'#1565C0','middle',true);if(i<3) s+=arrow(x+30,243,x+42,243,'#1E88E5',2);});return s+T(610,190,'12 的倍数（一部分）',16,'#1565C0','middle',true)+T(610,310,'+12  +12  +12 ……',14,'#789')+T(610,355,'一个数最小的倍数是它本身，',13,'#999')+T(610,378,'倍数的个数是无限的',13,'#999');},ext:{
+kp:['如果a×b=c，那么a和b都是c的因数，c是a和b的倍数','一个数的因数：最小是1，最大是它本身，个数有限','一个数的倍数：最小是它本身，没有最大的，个数无限','找因数要"一对一对找"：1和12、2和6、3和4'],
+ex:[{q:'例1：找出18的所有因数',s:['一对一对找：1×18、2×9、3×6','18的因数：1、2、3、6、9、18，共6个']},{q:'例2：写出7的倍数（50以内）',s:['7×1=7，7×2=14，7×3=21……','50以内：7、14、21、28、35、42、49']}],
+pr:[{q:'1. 16的因数有哪些？',a:'1、2、4、8、16'},{q:'2. 30以内6的倍数有哪些？',a:'6、12、18、24、30'},{q:'3. 判断：36是9的倍数吗？9是36的因数吗？',a:'都对，因为9×4=36'},{q:'4. 既是2的倍数又是3的倍数的最小数是几？（0除外）',a:'6'},{q:'5. ★挑战：一个数既是16的因数，又是4的倍数，它可能是几？',a:'4、8、16',star:1}],
+tip:['判断倍数特征：2的倍数个位是偶数；5的倍数个位是0或5；3的倍数各位数字之和是3的倍数'],warn:['因数和倍数是"互相依存"的关系']}});
+
+cards.push({m:1,t:'质数与合数（100以内质数表）',f:()=>{const isP=n=>{if(n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true;};let s='';for(let n=1;n<=100;n++){const r=Math.floor((n-1)/10),c=(n-1)%10,x=55+c*36,y=68+r*36;const fill=n===1?'#CFD8DC':(isP(n)?'#FFD54F':'#ECEFF1');s+=`<rect x="${x}" y="${y}" width="34" height="34" rx="4" fill="${fill}" stroke="#fff"/>`+T(x+17,y+23,n,13,'#455A64');}s+=`<rect x="470" y="110" width="26" height="26" rx="4" fill="#FFD54F"/>`+T(510,129,'质数（素数）：只有 1 和它本身两个因数',14,'#555','start');s+=`<rect x="470" y="155" width="26" height="26" rx="4" fill="#ECEFF1" stroke="#ccc"/>`+T(510,174,'合数：有两个以上的因数',14,'#555','start');s+=`<rect x="470" y="200" width="26" height="26" rx="4" fill="#CFD8DC"/>`+T(510,219,'1 既不是质数，也不是合数',14,'#555','start');return s+T(470,280,'💡 2 是最小的质数，',15,'#E65100','start')+T(470,305,'也是唯一的偶质数',15,'#E65100','start')+T(470,355,'100以内共有 25 个质数',14,'#789','start');},ext:{
+kp:['质数：只有1和它本身两个因数（如2、3、5、7）','合数：除了1和本身还有别的因数（如4、6、8、9）','1既不是质数也不是合数','分解质因数：把合数写成质数相乘，如 30=2×3×5'],
+ex:[{q:'例1：判断 51 是质数还是合数',s:['试除小质数：51÷3=17，能整除','51=3×17，是合数（易错！长得像质数）']},{q:'例2：把 60 分解质因数',s:['短除法：60÷2=30，30÷2=15，15÷3=5','60 = 2×2×3×5']}],
+pr:[{q:'1. 20以内的质数有哪些？',a:'2、3、5、7、11、13、17、19（共8个）'},{q:'2. 最小的合数是几？',a:'4'},{q:'3. 两个质数的和是9，这两个数是几？',a:'2和7'},{q:'4. 把36分解质因数',a:'36=2×2×3×3'},{q:'5. ★挑战：91是质数吗？',a:'不是！91=7×13，是合数',star:1}],
+tip:['背熟20以内8个质数；判断时依次用2、3、5、7试除','记住三个"伪装质数"：51=3×17，57=3×19，91=7×13'],warn:['质数不都是奇数（2是偶数）；奇数不都是质数（9、15是合数）']}});
+
+cards.push({m:1,t:'认识分数：平均分',f:()=>{let s=sector(240,245,135,-90,0,'#FF9800','#E65100');s+=sector(240,245,135,0,90,'#FFE0B2')+sector(240,245,135,90,180,'#FFE0B2')+sector(240,245,135,180,270,'#FFE0B2');s+=T(310,190,'取1份',15,'#fff','middle',true);s+=T(560,140,'一个披萨平均分成 4 份',19,'#555');s+=T(560,175,'涂色的 1 份就是它的',19,'#555');s+=frac(560,245,'1','4',40);return s+T(560,360,'分母4：平均分成4份',15,'#789')+T(560,390,'分子1：取其中的1份',15,'#789')+T(240,430,'⚠️ 必须是"平均分"',15,'#E53935');},ext:{
+kp:['把一个整体平均分成几份，取其中的几份，就用分数表示','分母：平均分的总份数（写在下面）','分子：取的份数（写在上面）','分子相同看分母：分母越大，每份越小'],
+ex:[{q:'例1：一块巧克力平均分成8块，吃了3块，吃了几分之几？',s:['平均分成8份 → 分母是8','吃了3份 → 分子是3','吃了这块巧克力的 3/8']},{q:'例2：比较 1/3 和 1/5 的大小',s:['同一个蛋糕，分3份每份大，分5份每份小','所以 1/3 ＞ 1/5']}],
+pr:[{q:'1. 一张纸平均折成4份，涂了1份，涂色部分是几分之几？',a:'1/4'},{q:'2. 3/7 中，分母是几？分子是几？各表示什么？',a:'分母7：平均分成7份；分子3：取其中3份'},{q:'3. 比大小：1/6 ○ 1/9',a:'1/6 ＞ 1/9'},{q:'4. 把1个西瓜平均分给5个人，每人分得几分之几？',a:'1/5'},{q:'5. ★挑战：小明吃了一个饼的2/8，小红吃了同样大的饼的1/4，谁吃得多？',a:'一样多！2/8=1/4',star:1}],
+tip:['读分数：先读分母再读分子，3/4读作"四分之三"'],warn:['前提必须是"平均分"！分得不一样多不能用分数表示']}});
+
+cards.push({m:1,t:'分数的意义：单位"1"',f:()=>{let s=sector(150,200,68,-90,0,'#F48FB1','#EC407A')+sector(150,200,68,0,90,'#F48FB1','#EC407A')+sector(150,200,68,90,180,'#F48FB1','#EC407A')+sector(150,200,68,180,270,'#FCE4EC','#EC407A');s+=T(150,120,'一个蛋糕',15,'#789')+frac(150,330,'3','4',24,'#EC407A');s+=T(400,120,'一根1米长的绳子',15,'#789');s+=`<line x1="300" y1="200" x2="450" y2="200" stroke="#FB8C00" stroke-width="10" stroke-linecap="round"/>`;s+=`<line x1="450" y1="200" x2="500" y2="200" stroke="#E0E0E0" stroke-width="10" stroke-linecap="round"/>`;[300,350,400,450,500].forEach(x=>s+=`<line x1="${x}" y1="188" x2="${x}" y2="212" stroke="#795548" stroke-width="2"/>`);s+=frac(400,330,'3','4',24,'#FB8C00');s+=T(645,120,'一群12只小鸟',15,'#789');s+=dots(590,165,9,4,36,12,'#4FC3F7');s+=dots(590+36,165+72,3,4,36,12,'#fff','#B0BEC5');s+=frac(645,330,'3','4',24,'#0288D1');return s+T(400,415,'单位"1"可以是一个物体、一段长度，也可以是一群物体',17,'#8E24AA','middle',true);},ext:{
+kp:['单位"1"：一个物体、一个计量单位、一个整体（一群）都可以看作单位"1"','分数单位：把单位"1"平均分成若干份，表示1份的数','求一个数的几分之几用乘法：12的3/4 = 12×3/4 = 9'],
+ex:[{q:'例1：班里有40人，男生占3/5，男生有多少人？',s:['单位"1"是全班40人','40 × 3/5 = 24（人）']},{q:'例2：3/4里有几个1/4？',s:['3/4里有3个1/4']}],
+pr:[{q:'1. 把一堆20个苹果平均分成5份，每份是几分之几？有几个？',a:'每份是1/5，有4个'},{q:'2. 5/6里面有（ ）个1/6',a:'5个'},{q:'3. 一根绳子长2米，用去它的1/2，用去多少米？',a:'1米'},{q:'4. 再添（ ）个1/9，4/9就等于1',a:'5个'},{q:'5. ★挑战："一根绳子的1/2"和"1/2米"一样吗？',a:'不一样！前者是分率，后者是具体长度',star:1}],
+tip:['做题先问自己："单位1是谁？"找到单位1，题目就解开了一半'],warn:['分率和具体数量是两回事，一定要分清']}});
+
+cards.push({m:1,t:'生活中的小数',f:()=>{let s=rrect(70,110,230,130,'#FFF9C4',14,'#FBC02D',3);s+=`<circle cx="100" cy="140" r="8" fill="#fff" stroke="#FBC02D" stroke-width="3"/>`;s+=T(185,165,'✏️ 铅笔',20,'#555')+T(185,210,'1.50 元',28,'#E53935','middle',true);s+=`<circle cx="140" cy="330" r="40" fill="#FFD54F" stroke="#F9A825" stroke-width="3"/>`+T(140,340,'1元',18,'#795548','middle',true);s+=T(205,340,'+',26,'#555');s+=`<circle cx="265" cy="330" r="33" fill="#E0E0E0" stroke="#9E9E9E" stroke-width="3"/>`+T(265,340,'5角',16,'#555','middle',true);s+=T(200,405,'1元5角 = 1.5 元',17,'#E65100','middle',true);s+=rrect(420,180,320,55,'#FFE0B2',6,'#FB8C00',2);for(let i=0;i<=20;i++){const x=420+i*16;s+=`<line x1="${x}" y1="180" x2="${x}" y2="${i%10===0?205:(i%5===0?198:192)}" stroke="#795548" stroke-width="1.5"/>`;}s+=T(420,260,'0',14,'#555')+T(580,260,'1米',14,'#555')+T(740,260,'2米',14,'#555');s+=arrow(660,140,660,175,'#E53935',3)+T(660,125,'1.5米',18,'#E53935','middle',true);return s+T(580,330,'1.5米 = 1米 + 5分米',18,'#E65100','middle',true)+T(580,375,'把1平均分成10份，每份是0.1',15,'#789')+T(580,403,'十分位、百分位……是小数的数位',14,'#999');},ext:{
+kp:['小数点右边依次是：十分位（0.1）、百分位（0.01）、千分位（0.001）','小数的性质：末尾添0或去0，大小不变','比较小数：先比整数部分，再依次比十分位、百分位……'],
+ex:[{q:'例1：3.65元是几元几角几分？',s:['整数3是3元，十分位6是6角，百分位5是5分','3.65元 = 3元6角5分']},{q:'例2：比较 0.8 和 0.79',s:['整数部分相同','十分位：8＞7，所以 0.8 ＞ 0.79']}],
+pr:[{q:'1. 0.72的7在什么位上？表示什么？',a:'十分位，表示7个0.1'},{q:'2. 2元3分 = （ ）元',a:'2.03元'},{q:'3. 比大小：4.09 ○ 4.1',a:'4.09 ＜ 4.1'},{q:'4. 化简：5.700 = ？ 10.050 = ？',a:'5.7；10.05'},{q:'5. ★挑战：一个两位小数，去掉小数点后是56，原数是多少？',a:'0.56',star:1}],
+tip:['比较小数像"排队报数"：从左往右一位一位比，先分出胜负就停'],warn:['0.8和0.80大小相等，但意义不同']}});
+
+cards.push({m:1,t:'分数 · 小数 · 百分数是一家',f:()=>{let s=rrect(330,75,140,85,'#FCE4EC',14,'#EC407A',3)+frac(400,115,'1','2',26,'#EC407A');s+=rrect(100,290,140,75,'#E3F2FD',14,'#1E88E5',3)+T(170,338,'0.5',30,'#1565C0','middle',true);s+=rrect(560,290,140,75,'#E8F5E9',14,'#43A047',3)+T(630,338,'50%',30,'#2E7D32','middle',true);s+=arrow(330,160,215,285,'#999',2)+arrow(240,285,355,165,'#999',2);s+=arrow(470,165,585,285,'#999',2)+arrow(560,290,445,168,'#999',2);s+=arrow(250,340,550,340,'#999',2)+arrow(550,318,250,318,'#999',2);s+=`<rect x="365" y="200" width="70" height="70" fill="#fff" stroke="#455A64" stroke-width="2"/>`;s+=`<rect x="365" y="200" width="35" height="70" fill="#26A69A"/>`;s+=T(400,300,'都表示"一半"',14,'#26A69A','middle',true);s+=T(238,222,'1÷2=0.5',13,'#789')+T(568,222,'×100%',13,'#789');return s+T(400,420,'同一个数值的三种写法，可以互相转化',17,'#8E24AA','middle',true);},ext:{
+kp:['分数→小数：分子÷分母','小数→百分数：小数点右移两位加%','百分数→分数：写成分母100的分数再约分','常用对照要背：1/2=0.5=50%，1/4=0.25=25%，3/4=0.75=75%'],
+ex:[{q:'例1：把 3/8 化成小数和百分数',s:['3÷8=0.375','0.375=37.5%']},{q:'例2：把 65% 化成最简分数',s:['65%=65/100','约分：=13/20']}],
+pr:[{q:'1. 0.6 = （ ）/（ ） = （ ）%',a:'3/5 = 60%'},{q:'2. 1/4、0.3、28% 从小到大排列',a:'1/4 ＜ 28% ＜ 0.3'},{q:'3. 7/20 化成百分数',a:'35%'},{q:'4. 125% 化成小数',a:'1.25'},{q:'5. ★挑战：一件衣服打八折，"八折"用百分数和小数怎么表示？',a:'80%，0.8',star:1}],
+tip:['比较三种数的大小时，统一化成小数最方便'],warn:['百分数只表示"率"，后面不能带单位']}});
+
+cards.push({m:1,t:'认识负数',f:()=>{let s=`<rect x="168" y="90" width="28" height="280" rx="14" fill="#ECEFF1" stroke="#90A4AE" stroke-width="2"/>`;s+=`<circle cx="182" cy="385" r="30" fill="#E53935"/>`;s+=`<rect x="174" y="185" width="16" height="190" fill="#E53935"/>`;for(let t=-6;t<=10;t+=1){const y=255-t*14;if(y>95&&y<368)s+=`<line x1="196" y1="${y}" x2="${t%5===0?216:206}" y2="${y}" stroke="#607D8B" stroke-width="1.5"/>`;}s+=T(245,260,'0℃',15,'#555','start')+T(245,190,'+5℃',16,'#E53935','start',true)+T(245,302,'−3℃',16,'#1E88E5','start',true);s+=`<line x1="196" y1="255" x2="240" y2="255" stroke="#555" stroke-width="2"/>`;s+=T(182,440,'零上为正，零下为负',14,'#789');s+=`<polygon points="440,270 560,110 680,270" fill="#A5D6A7" stroke="#66BB6A" stroke-width="2"/>`;s+=`<rect x="410" y="270" width="330" height="130" fill="#81D4FA" opacity="0.75"/>`;s+=`<line x1="400" y1="270" x2="755" y2="270" stroke="#0277BD" stroke-width="2" stroke-dasharray="8"/>`;s+=T(748,258,'海平面 0米',14,'#0277BD','end');s+=T(560,100,'⛰ +800米',17,'#2E7D32','middle',true);s+=T(600,355,'🐟 −200米',17,'#01579B','middle',true);return s+T(575,435,'比 0 大的是正数，比 0 小的是负数，0 既不是正数也不是负数',14,'#8E24AA');},ext:{
+kp:['正数和负数表示意义相反的量：零上/零下、收入/支出','0既不是正数也不是负数','负数比较：负数都比0小；−3 ＞ −8（越靠近0越大）'],
+ex:[{q:'例1：收入500元记作+500元，支出200元记作什么？',s:['支出与收入意义相反','记作 −200元']},{q:'例2：比较 −5℃ 和 −2℃ 哪个更冷？',s:['−5在数轴上更靠左','−5℃ 更冷']}],
+pr:[{q:'1. 电梯上升8层记+8层，下降3层记作？',a:'−3层'},{q:'2. 把这些数分类：+7、−3、0、15、−0.5，哪些是负数？',a:'−3和−0.5'},{q:'3. 从大到小排列：2、−1、0、−4',a:'2 ＞ 0 ＞ −1 ＞ −4'},{q:'4. 某天最高气温5℃，最低−3℃，温差是多少？',a:'8℃'},{q:'5. ★挑战：小明向东走50米记+50米，又走了−30米，现在他在哪边？距离多少？',a:'东边20米处',star:1}],
+tip:['在数轴（温度计）上想负数：越往左（下）越小'],warn:['−1 ＞ −10！别被"10比1大"骗了']}});
+
+cards.push({m:2,t:'加法的意义：合起来',f:()=>{let s=`<path d="M80,270 Q250,255 430,270" stroke="#8D6E63" stroke-width="8" fill="none" stroke-linecap="round"/>`;s+=T(140,255,'🐦',36)+T(230,250,'🐦',36)+T(320,253,'🐦',36);s+=T(540,140,'🐦',34)+T(620,175,'🐦',34);s+=arrow(590,200,430,245,'#4FC3F7',3)+T(620,120,'又飞来2只',15,'#0288D1');s+=`<path d="M110,300 Q110,330 250,330 Q390,330 390,300" stroke="#43A047" stroke-width="3" fill="none"/>`;s+=T(250,360,'原来有3只',15,'#2E7D32');return s+T(400,425,'3 ＋ 2 ＝ 5',42,'#E65100','middle',true)+T(670,300,'把两部分合在一起，用加法',15,'#789');},ext:{
+kp:['加法：把两部分合并成一个整体','加法算式：加数＋加数＝和','应用题关键词："一共""总共""合起来"常用加法'],
+ex:[{q:'例1：树上有6只鸟，又飞来4只，一共有几只？',s:['6＋4＝10（只）','答：一共有10只鸟']},{q:'例2：（ ）＋ 7 ＝ 15，括号里填几？',s:['想减法：15−7＝8','验算：8＋7＝15 ✓']}],
+pr:[{q:'1. 小明有8支铅笔，妈妈又买来5支，现在有几支？',a:'13支'},{q:'2. 9＋6＝？ 7＋8＝？',a:'15；15'},{q:'3. 比25多17的数是多少？',a:'42'},{q:'4. 一个加数是34，另一个加数是28，和是多少？',a:'62'},{q:'5. ★挑战：两个数的和是20，差是4，这两个数是几？',a:'12和8',star:1}],
+tip:['交换加数位置和不变，可以用来验算'],warn:['看到"一共"不要闭眼就加，先想清楚是不是"合起来"的意思']}});
+
+cards.push({m:2,t:'减法的意义：去掉一部分',f:()=>{let s=`<ellipse cx="330" cy="330" rx="230" ry="42" fill="#ECEFF1" stroke="#B0BEC5" stroke-width="2"/>`;s+=apple(200,285,20)+apple(280,285,20)+apple(360,285,20);s+=`<g opacity="0.35">${apple(470,265,20)}${apple(550,255,20)}</g>`;s+=`<circle cx="470" cy="265" r="28" fill="none" stroke="#E53935" stroke-width="2.5" stroke-dasharray="6"/>`;s+=`<circle cx="550" cy="255" r="28" fill="none" stroke="#E53935" stroke-width="2.5" stroke-dasharray="6"/>`;s+=arrow(590,230,690,170,'#E53935',3)+T(660,140,'拿走2个',16,'#E53935','middle',true);s+=T(180,180,'原来有5个',15,'#789');return s+T(400,430,'5 − 2 ＝ 3',42,'#1565C0','middle',true);},ext:{
+kp:['减法：从整体中去掉一部分，求剩下的部分','减法算式：被减数−减数＝差','减法还能"比多少"','加减互逆：可以互相验算'],
+ex:[{q:'例1：停车场有15辆车，开走了7辆，还剩几辆？',s:['15−7＝8（辆）']},{q:'例2：小红有12张卡片，小明有9张，小红比小明多几张？',s:['12−9＝3（张）']}],
+pr:[{q:'1. 16−9＝？ 14−6＝？',a:'7；8'},{q:'2. 树上有13个桃子，摘走5个，还剩几个？',a:'8个'},{q:'3. 被减数是50，差是23，减数是多少？',a:'27'},{q:'4. 哥哥身高142厘米，弟弟128厘米，哥哥比弟弟高多少？',a:'14厘米'},{q:'5. ★挑战：一本书小明看了36页，还剩下的比看过的多18页，这本书共几页？',a:'90页',star:1}],
+tip:['"还剩""比…多/少""相差"都是减法的信号词'],warn:['求"甲比乙多几"，永远用大数减小数']}});
+
+cards.push({m:2,t:'凑十法：9＋4',f:()=>{let s='';for(let r=0;r<2;r++)for(let c=0;c<5;c++){const x=110+c*55,y=140+r*55,idx=r*5+c;s+=`<rect x="${x-24}" y="${y-24}" width="48" height="48" fill="#fff" stroke="#B0BEC5" stroke-width="2" rx="6"/>`;if(idx<9)s+=`<circle cx="${x}" cy="${y}" r="17" fill="#EF5350"/>`;}s+=T(220,255,'9个（十格框差1个满）',14,'#789');s+=dots(510,140,4,2,55,17,'#42A5F5');s+=T(538,255,'4个',14,'#789');s+=arrow(510,120,335,150,'#FB8C00',3.5);s+=T(430,95,'移1个过去，凑成10',16,'#FB8C00','middle',true);s+=T(400,330,'9 ＋ 4 ＝ 9 ＋ 1 ＋ 3 ＝ 10 ＋ 3 ＝ 13',26,'#E65100','middle',true);return s+T(400,380,'把4分成1和3，先凑成10，再算10＋3',16,'#789')+T(400,420,'💡 "看大数，拆小数，凑成十，加剩数"',15,'#8E24AA');},ext:{
+kp:['凑十法：先把大数凑成10，再加剩下的数','口诀：看大数，拆小数，凑成十，加剩数','9要凑10拆1个，8要凑10拆2个，7要凑10拆3个'],
+ex:[{q:'例1：8＋7＝？',s:['看大数8，它差2满十','8＋2＝10，10＋5＝15']},{q:'例2：6＋9＝？',s:['看大数9，它差1满十','9＋1＝10，10＋5＝15']}],
+pr:[{q:'1. 用凑十法算：9＋6',a:'15'},{q:'2. 用凑十法算：8＋5',a:'13'},{q:'3. 7＋6＝？',a:'13'},{q:'4. 9＋9＝？ 8＋8＝？',a:'18；16'},{q:'5. ★挑战：不用竖式，很快算出 99＋46',a:'145',star:1}],
+tip:['凑十法长大后还能用：99+46想成100+45'],warn:['拆数别拆错：9+4拆4为1和3']}});
+
+cards.push({m:2,t:'列竖式：进位与退位',f:()=>{const mono='font-family="Consolas,Menlo,monospace"';let s=`<line x1="400" y1="80" x2="400" y2="400" stroke="#ddd" stroke-width="2" stroke-dasharray="6"/>`;s+=`<text x="230" y="150" font-size="38" ${mono} text-anchor="middle" fill="#333">3 8</text>`;s+=`<text x="196" y="200" font-size="38" ${mono} text-anchor="middle" fill="#333">+  2 5</text>`;s+=`<line x1="150" y1="218" x2="300" y2="218" stroke="#333" stroke-width="3"/>`;s+=`<text x="230" y="265" font-size="38" ${mono} text-anchor="middle" fill="#1565C0">6 3</text>`;s+=T(213,240,'1',17,'#E53935','middle',true);s+=T(225,320,'个位 8+5=13，满十',15,'#789')+T(225,345,'向十位进 1',15,'#E53935');s+=`<text x="600" y="150" font-size="38" ${mono} text-anchor="middle" fill="#333">5 2</text>`;s+=`<circle cx="583" cy="115" r="4" fill="#E53935"/>`;s+=`<text x="566" y="200" font-size="38" ${mono} text-anchor="middle" fill="#333">−  1 7</text>`;s+=`<line x1="520" y1="218" x2="670" y2="218" stroke="#333" stroke-width="3"/>`;s+=`<text x="600" y="265" font-size="38" ${mono} text-anchor="middle" fill="#1565C0">3 5</text>`;s+=T(600,320,'个位 2−7 不够减，',15,'#789')+T(600,345,'向十位借 1 当 10',15,'#E53935');return s+T(400,425,'相同数位对齐，从个位算起',18,'#8E24AA','middle',true);},ext:{
+kp:['竖式三步：①相同数位对齐 ②从个位算起 ③满十进一/不够退一','进位加：个位相加满10，向十位进1','退位减：个位不够减，从十位借1当10'],
+ex:[{q:'例1：竖式计算 47＋36',s:['个位：7＋6＝13，写3进1','十位：4＋3＝7，加进位1得8','结果：83']},{q:'例2：竖式计算 63−28',s:['个位：3−8不够，借1，13−8＝5','十位：6借走1剩5，5−2＝3','结果：35']}],
+pr:[{q:'1. 竖式计算：56＋38',a:'94'},{q:'2. 竖式计算：82−45',a:'37'},{q:'3. 竖式计算：175＋267',a:'442'},{q:'4. 竖式计算：403−158',a:'245'},{q:'5. ★挑战：□7＋2□＝85，□里各填几？',a:'57＋28＝85',star:1}],
+tip:['做完减法用加法验算'],warn:['进位的1忘了加；退位后十位忘了减1']}});
+
+cards.push({m:2,t:'乘法的意义：相同加数',f:()=>{let s='';for(let i=0;i<4;i++){const cx=140+i*168;s+=`<ellipse cx="${cx}" cy="200" rx="70" ry="26" fill="#ECEFF1" stroke="#B0BEC5" stroke-width="2"/>`;for(let k=0;k<3;k++) s+=`<circle cx="${cx-34+k*34}" cy="178" r="14" fill="#EC407A"/><circle cx="${cx-34+k*34}" cy="174" r="3" fill="#66BB6A"/>`;s+=T(cx,250,'3颗',14,'#789');}s+=T(400,315,'3 ＋ 3 ＋ 3 ＋ 3 ＝ 12',26,'#555','middle',true);s+=arrow(400,330,400,360,'#FB8C00',3);return s+T(400,405,'3 × 4 ＝ 12',36,'#E65100','middle',true)+T(400,440,'4 个 3 相加，乘法是相同加数求和的简便写法',15,'#789');},ext:{
+kp:['乘法是求"几个相同加数的和"的简便运算','3×4 表示 4个3相加，也可以表示 3个4相加','乘法算式：因数×因数＝积'],
+ex:[{q:'例1：每盒有6支彩笔，5盒一共有多少支？',s:['6×5＝30（支）']},{q:'例2：把 7＋7＋7 改写成乘法算式',s:['7×3＝21']}],
+pr:[{q:'1. 把 4＋4＋4＋4＋4 写成乘法算式并计算',a:'4×5＝20'},{q:'2. 每辆车坐8人，6辆车共坐多少人？',a:'48人'},{q:'3. 小明3岁，妈妈的年龄是他的9倍，妈妈几岁？',a:'27岁'},{q:'4. 2×7和7×2结果一样吗？意义呢？',a:'结果都14，意义不同'},{q:'5. ★挑战：5＋5＋5＋4 怎么算简便？',a:'5×3＋4＝19',star:1}],
+tip:['看到"每…共…"就是乘法'],warn:['乘法必须是"相同"加数']}});
+
+cards.push({m:2,t:'九九乘法表',f:()=>{const cols=['#FFCDD2','#F8BBD0','#E1BEE7','#C5CAE9','#BBDEFB','#B2DFDB','#C8E6C9','#FFF9C4','#FFE0B2'];let s='';for(let i=1;i<=9;i++)for(let j=1;j<=i;j++){const x=42+(j-1)*79,y=78+(i-1)*39;s+=`<rect x="${x}" y="${y}" width="77" height="37" rx="5" fill="${cols[j-1]}" stroke="#fff" stroke-width="2"/>`;s+=T(x+38.5,y+24,`${j}×${i}=${i*j}`,14,'#455A64');}return s+T(680,240,'口诀表呈',16,'#789')+T(680,265,'阶梯形，',16,'#789')+T(680,290,'一句口诀',16,'#789')+T(680,315,'算两道题',16,'#789');},ext:{
+kp:['一句口诀算两道乘法','还能算除法','每一列都是同一个数的倍数'],
+ex:[{q:'例1：用口诀算 6×8',s:['六八四十八，6×8＝48']},{q:'例2：想口诀算 54÷9',s:['六九五十四，54÷9＝6']}],
+pr:[{q:'1. 7×8＝？用的哪句口诀？',a:'56，七八五十六'},{q:'2. 口诀"四六二十四"能算哪四道题？',a:'4×6=24、6×4=24、24÷4=6、24÷6=4'},{q:'3. 63÷7＝？',a:'9'},{q:'4. 积是36的口诀有哪几句？',a:'四九三十六、六六三十六'},{q:'5. ★挑战：两个一位数的积的个位是2，可能是几？',a:'3×4、2×6、4×8等',star:1}],
+tip:['难记的重点背5句：七八五十六、六七四十二、六八四十八、七九六十三、八九七十二'],warn:['背口诀要"倒背如流"']}});
+
+cards.push({m:2,t:'除法的两种含义',f:()=>{let s=`<line x1="400" y1="70" x2="400" y2="400" stroke="#ddd" stroke-width="2" stroke-dasharray="6"/>`;for(let i=0;i<3;i++){const cx=115+i*100;s+=T(cx,140,'🧒',30);s+=dots(cx-20,180,4,2,38,12,'#F48FB1');}s+=T(200,290,'12颗糖，平均分给3人',15,'#555')+T(200,318,'每人分得 4 颗',15,'#555');s+=T(200,360,'12 ÷ 3 ＝ 4',24,'#E65100','middle',true)+T(200,395,'平均分',15,'#E65100');for(let i=0;i<3;i++){const x=460+i*105;s+=rrect(x,120,88,120,'#E1F5FE',12,'#29B6F6',2.5);s+=dots(x+27,155,4,2,36,12,'#29B6F6');}s+=T(615,290,'12颗糖，每4颗装一袋',15,'#555')+T(615,318,'能装 3 袋',15,'#555');return s+T(615,360,'12 ÷ 4 ＝ 3',24,'#1565C0','middle',true)+T(615,395,'包含除（求几个几）',15,'#1565C0');},ext:{
+kp:['平均分：知道总数和份数，求每份多少','包含除：知道总数和每份多少，求份数','除法算式：被除数÷除数＝商','乘除互逆'],
+ex:[{q:'例1：24个苹果平均装进6个篮子，每篮几个？',s:['24÷6＝4（个）']},{q:'例2：24个苹果，每8个装一箱，能装几箱？',s:['24÷8＝3（箱）']}],
+pr:[{q:'1. 45÷9＝？ 32÷8＝？',a:'5；4'},{q:'2. 30本书平均分给5个小组，每组几本？',a:'6本'},{q:'3. 有36人，每4人一队，能分成几队？',a:'9队'},{q:'4. 被除数是56，商是7，除数是多少？',a:'8'},{q:'5. ★挑战：一根绳子长18米，剪成3米一段，要剪几次？',a:'5次',star:1}],
+tip:['分清两种除法：问"每份几个"是平均分；问"有几份"是包含除'],warn:['0不能作除数！']}});
+
+cards.push({m:2,t:'有余数的除法',f:()=>{let s='';for(let i=0;i<3;i++){const cx=155+i*175;s+=`<ellipse cx="${cx}" cy="220" rx="75" ry="28" fill="#ECEFF1" stroke="#B0BEC5" stroke-width="2"/>`;s+=dots(cx-39,180,4,4,26,12,'#FFA726');s+=T(cx,270,`第${['一','二','三'][i]}盘（4个）`,13,'#789');}s+=`<circle cx="672" cy="195" r="14" fill="#FFA726"/>`;s+=`<circle cx="672" cy="195" r="30" fill="none" stroke="#E53935" stroke-width="3" stroke-dasharray="6"/>`;s+=T(672,255,'剩1个',15,'#E53935','middle',true);s+=T(400,350,'13 ÷ 4 ＝ 3（盘）…… 1（个）',26,'#E65100','middle',true);s+=T(318,385,'商',14,'#789')+T(520,385,'余数',14,'#E53935');return s+T(400,428,'⚠️ 余数一定要比除数小',17,'#E53935','middle',true);},ext:{
+kp:['平均分后有剩余，剩下的数叫余数','余数必须比除数小','验算：商×除数＋余数＝被除数','生活应用：进一法、去尾法'],
+ex:[{q:'例1：22÷5＝？并验算',s:['22÷5＝4……2','验算：4×5＋2＝22 ✓']},{q:'例2：30个人坐船，每船限乘4人，至少要几条船？',s:['30÷4＝7……2','7＋1＝8（条）']}],
+pr:[{q:'1. 26÷6＝？',a:'4……2'},{q:'2. 39÷5＝？验算一下',a:'7……4'},{q:'3. □÷7＝5……□，余数最大是几？被除数是几？',a:'余数最大6，被除数41'},{q:'4. 3米布做一条裤子用2米，最多做几条？',a:'1条'},{q:'5. ★挑战：按"红黄蓝"排列，第20颗是什么颜色？',a:'黄色',star:1}],
+tip:['周期问题（星期几、颜色循环）都用有余数除法'],warn:['余数≥除数说明商小了，要重算！']}});
+
+cards.push({m:2,t:'四则混合运算的顺序',f:()=>{let s=`<polygon points="220,90 280,90 320,150 180,150" fill="#EF9A9A" stroke="#fff" stroke-width="2"/>`+T(250,128,'① 小括号（）',15,'#B71C1C','middle',true);s+=`<polygon points="180,158 320,158 360,218 140,218" fill="#FFCC80" stroke="#fff" stroke-width="2"/>`+T(250,196,'② 乘法、除法',16,'#E65100','middle',true);s+=`<polygon points="140,226 360,226 400,286 100,286" fill="#A5D6A7" stroke="#fff" stroke-width="2"/>`+T(250,264,'③ 加法、减法',16,'#1B5E20','middle',true);s+=T(250,330,'先算上层，再算下层',15,'#789');s+=T(250,360,'同级运算，从左往右',15,'#789');s+=T(600,120,'5 ＋（8 − 3）× 2',26,'#333','middle',true);s+=T(672,95,'①',15,'#B71C1C')+T(645,150,'②',15,'#E65100')+T(505,150,'③',15,'#1B5E20');s+=T(600,200,'＝ 5 ＋ 5 × 2',24,'#555','middle');s+=T(600,260,'＝ 5 ＋ 10',24,'#555','middle');return s+T(600,320,'＝ 15',28,'#E65100','middle',true);},ext:{
+kp:['先算小括号里的，再算乘除，最后算加减','同级运算从左往右依次算','有中括号：先小括号，再中括号，最后括号外'],
+ex:[{q:'例1：36−12÷4',s:['先算除法：12÷4＝3','再算减法：36−3＝33']},{q:'例2：(15＋9)÷(11−5)',s:['15＋9＝24，11−5＝6','24÷6＝4']}],
+pr:[{q:'1. 20＋30×2＝？',a:'80'},{q:'2. (20＋30)×2＝？',a:'100'},{q:'3. 48÷6＋2×5＝？',a:'18'},{q:'4. 100−(25＋15)÷8＝？',a:'95'},{q:'5. ★挑战：6，2，3三数配运算符号使结果等于12',a:'(6−2)×3=12',star:1}],
+tip:['做混合运算先"画顺序"，把先算的部分画下划线'],warn:['每写一步没算的部分要原样抄下来，别丢！']}});
+
+cards.push({m:2,t:'五大运算律',f:()=>{const items=[['加法交换律','a＋b＝b＋a','#E3F2FD','#1565C0'],['加法结合律','(a＋b)＋c＝a＋(b＋c)','#E8F5E9','#2E7D32'],['乘法交换律','a×b＝b×a','#FFF3E0','#E65100'],['乘法结合律','(a×b)×c＝a×(b×c)','#F3E5F5','#7B1FA2'],['乘法分配律','(a＋b)×c＝a×c＋b×c','#FCE4EC','#C2185B']];let s='';const pos=[[45,85],[285,85],[525,85],[165,255],[405,255]];items.forEach(([name,fm,bg,fg],i)=>{const [x,y]=pos[i];s+=rrect(x,y,230,140,bg,14,fg,2);s+=T(x+115,y+45,name,19,fg,'middle',true);s+=T(x+115,y+95,fm,17,'#455A64');});return s+T(660,325,'💡 分配律',17,'#C2185B','middle',true)+T(660,355,'最常考、最易错',14,'#789')+T(660,385,'（乘进去要乘两次）',13,'#999');},ext:{
+kp:['运算律用途：让计算更简便','凑整思想：找能凑成整十整百的数先算','分配律正用/反用'],
+ex:[{q:'例1：简算 25×13×4',s:['25×4＝100先算','25×4×13＝1300']},{q:'例2：简算 102×45',s:['(100＋2)×45＝4500＋90＝4590']},{q:'例3：简算 78×36＋22×36',s:['(78＋22)×36＝3600']}],
+pr:[{q:'1. 简算：47＋58＋53',a:'158'},{q:'2. 简算：125×88×8',a:'88000'},{q:'3. 简算：99×64',a:'6336'},{q:'4. 简算：36×99＋36',a:'3600'},{q:'5. ★挑战：简算 999×999＋1999',a:'1000000',star:1}],
+tip:['见25找4，见125找8，见5找2'],warn:['分配律最大陷阱：a和b都要乘c']}});
+
+cards.push({m:2,t:'分数加减法：先通分',f:()=>{let s=sector(120,190,65,-90,90,'#F48FB1','#EC407A')+sector(120,190,65,90,270,'#FCE4EC','#EC407A');s+=frac(120,300,'1','2',22,'#EC407A');s+=T(210,200,'＋',30,'#555');s+=sector(300,190,65,-90,30,'#4DB6AC','#00897B')+sector(300,190,65,30,150,'#E0F2F1','#00897B')+sector(300,190,65,150,270,'#E0F2F1','#00897B');s+=frac(300,300,'1','3',22,'#00897B');s+=arrow(395,190,470,190,'#FB8C00',3.5)+T(432,160,'通分',16,'#FB8C00','middle',true);let big='';for(let i=0;i<6;i++){const fill=i<3?'#F48FB1':(i<5?'#4DB6AC':'#fff');big+=sector(590,195,85,-90+i*60,-30+i*60,fill,'#888');}s+=big+T(590,325,'每份都是 1/6',15,'#789');return s+T(400,415,'1/2 ＋ 1/3 ＝ 3/6 ＋ 2/6 ＝ 5/6',26,'#E65100','middle',true)+T(400,445,'分母不同不能直接加，先化成相同分母（通分）',14,'#789');},ext:{
+kp:['同分母：分母不变，分子相加减','异分母：先通分再加减','通分用两个分母的最小公倍数','结果要约分成最简分数'],
+ex:[{q:'例1：3/4 ＋ 1/6',s:['最小公倍数是12','3/4＝9/12，1/6＝2/12','9/12＋2/12＝11/12']},{q:'例2：5/6 − 1/2',s:['通分：1/2＝3/6','5/6−3/6＝2/6＝1/3']}],
+pr:[{q:'1. 2/7＋3/7＝？',a:'5/7'},{q:'2. 1/2＋1/4＝？',a:'3/4'},{q:'3. 7/8−1/4＝？',a:'5/8'},{q:'4. 1−3/5＝？',a:'2/5'},{q:'5. ★挑战：1/2＋1/6＋1/12＝？',a:'3/4',star:1}],
+tip:['通分找最小公倍数：分母互质直接相乘'],warn:['分母不同绝对不能直接加！']}});
+
+cards.push({m:2,t:'分数乘分数：面积模型',f:()=>{let s=`<rect x="110" y="105" width="240" height="240" fill="#fff" stroke="#455A64" stroke-width="2.5"/>`;s+=`<rect x="110" y="105" width="120" height="240" fill="#FFF176" opacity="0.85"/>`;s+=`<rect x="110" y="105" width="240" height="80" fill="#64B5F6" opacity="0.55"/>`;s+=`<rect x="110" y="105" width="120" height="80" fill="#66BB6A"/>`;s+=`<line x1="230" y1="105" x2="230" y2="345" stroke="#455A64" stroke-width="2"/>`;s+=`<line x1="110" y1="185" x2="350" y2="185" stroke="#455A64" stroke-width="2"/>`;s+=`<line x1="110" y1="265" x2="350" y2="265" stroke="#455A64" stroke-width="2"/>`;s+=T(230,385,'黄色：宽的 1/2',14,'#F9A825')+T(230,412,'蓝色：高的 1/3',14,'#1E88E5');s+=T(170,152,'1/6',18,'#fff','middle',true);s+=frac(470,200,'1','2',30,'#F9A825')+T(540,210,'×',28,'#555')+frac(610,200,'1','3',30,'#1E88E5')+T(675,210,'＝',28,'#555')+frac(730,200,'1','6',30,'#2E7D32');return s+T(590,320,'绿色重叠部分',16,'#2E7D32','middle',true)+T(590,350,'占整个正方形的 1/6',16,'#2E7D32','middle',true)+T(590,400,'分子乘分子，分母乘分母',15,'#789');},ext:{
+kp:['分数乘分数：分子乘分子，分母乘分母','能约分先约分','分数除法：除以一个数＝乘这个数的倒数','倒数：分子分母交换，乘积为1'],
+ex:[{q:'例1：2/3 × 3/4',s:['先约分','＝1/2']},{q:'例2：5/6 ÷ 2/3',s:['除法变乘法：5/6 × 3/2','＝5/4']}],
+pr:[{q:'1. 1/4 × 2/5＝？',a:'1/10'},{q:'2. 3/8 × 4＝？',a:'3/2'},{q:'3. 7/9 的倒数是？1的倒数是？',a:'9/7；1'},{q:'4. 4/5 ÷ 8＝？',a:'1/10'},{q:'5. ★挑战：桶12升油，倒出3/4后，倒回剩下的1/3，桶里多少升？',a:'4升',star:1}],
+tip:['"约分优先"原则'],warn:['除法变乘法时，只把"除数"变倒数']}});
+
+cards.push({m:2,t:'小数点搬家（小数乘除10）',f:()=>{let s=T(400,180,'3',60,'#333','end',true)+`<circle cx="415" cy="172" r="7" fill="#E53935"/>`+T(432,180,'14',60,'#333','start',true);s+=arrow(500,220,640,290,'#E65100',3)+T(600,230,'×10',20,'#E65100','middle',true);s+=T(670,335,'31.4',36,'#E65100','middle',true)+T(670,368,'小数点向右移一位',14,'#789');s+=arrow(300,220,160,290,'#1565C0',3)+T(200,230,'÷10',20,'#1565C0','middle',true);s+=T(130,335,'0.314',36,'#1565C0','middle',true)+T(130,368,'小数点向左移一位',14,'#789');return s+T(400,90,'数字不变，只是小数点在"搬家"',17,'#8E24AA','middle',true)+T(400,435,'×10 右移一位；÷10 左移一位',15,'#789');},ext:{
+kp:['×10、×100、×1000：小数点向右移1、2、3位','÷10、÷100、÷1000：小数点向左移1、2、3位','位数不够用0补','小数乘法：按整数乘，数出小数位数'],
+ex:[{q:'例1：2.5 × 100＝？ 36 ÷ 1000＝？',s:['2.5×100右移两位 → 250','36÷1000左移三位 → 0.036']},{q:'例2：1.2 × 0.3＝？',s:['12×3＝36','共两位小数','＝0.36']}],
+pr:[{q:'1. 0.78×10＝？ 0.78×1000＝？',a:'7.8；780'},{q:'2. 45.6÷100＝？',a:'0.456'},{q:'3. 0.5×0.4＝？',a:'0.2'},{q:'4. 7.2÷0.9＝？',a:'8'},{q:'5. ★挑战：一个数的小数点右移一位后比原数大27，原数是多少？',a:'3',star:1}],
+tip:['小数除以小数：把除数变成整数'],warn:['1.2×0.3的积是0.36不是3.6！']}});
+
+cards.push({m:2,t:'四舍五入（估算与近似数）',f:()=>{let s=`<path d="M60,400 Q400,40 740,400" fill="#DCEDC8" stroke="#8BC34A" stroke-width="3"/>`;const left=[[130,372,'0'],[180,330,'1'],[228,292,'2'],[276,258,'3'],[326,226,'4']];const right=[[478,226,'5'],[528,258,'6'],[576,292,'7'],[624,330,'8'],[674,372,'9']];left.forEach(([x,y,d])=>s+=`<circle cx="${x}" cy="${y}" r="17" fill="#90CAF9"/>`+T(x,y+6,d,17,'#0D47A1','middle',true));right.forEach(([x,y,d])=>s+=`<circle cx="${x}" cy="${y}" r="17" fill="#FFAB91"/>`+T(x,y+6,d,17,'#BF360C','middle',true));s+=T(400,175,'🚩',30);s+=arrow(250,330,140,410,'#1565C0',3)+T(165,440,'不满5，舍去 → 0',15,'#1565C0','middle',true);s+=arrow(555,330,665,410,'#BF360C',3)+T(645,440,'满5，进一 → 10',15,'#BF360C','middle',true);return s+T(400,90,'38 ≈ 40（个位是8，满5向十位进一）',19,'#E65100','middle',true);},ext:{
+kp:['四舍五入：看要保留位数的下一位','估算：把数看成整十整百再计算','应用：购物估钱、估计人数等'],
+ex:[{q:'例1：把 4735 四舍五入到百位',s:['看十位：3，不满5，舍去','4735 ≈ 4700']},{q:'例2：估算 49×21',s:['49≈50，21≈20','≈1000']}],
+pr:[{q:'1. 682 ≈ （ ）（保留到十位）',a:'680'},{q:'2. 3.96 ≈ （ ）（保留一位小数）',a:'4.0'},{q:'3. 估算：398＋203',a:'≈600'},{q:'4. 妈妈带100元，买39元和48元的东西够吗？',a:'够（往大估90＜100）'},{q:'5. ★挑战：四舍五入到十位是60，最大最小整数各是多少？',a:'最小55，最大64',star:1}],
+tip:['购物判断"够不够"要往大估'],warn:['保留一位小数得4.0时，末尾的0必须留着']}});
+
+cards.push({m:3,t:'平面图形家族',f:()=>{const face=(x,y)=>`<circle cx="${x-13}" cy="${y-5}" r="4" fill="#333"/><circle cx="${x+13}" cy="${y-5}" r="4" fill="#333"/><path d="M${x-12},${y+10} Q${x},${y+22} ${x+12},${y+10}" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;let s='';s+=`<circle cx="140" cy="145" r="48" fill="#F48FB1"/>`+face(140,145)+T(140,225,'圆形',17,'#333','middle',true)+T(140,248,'由曲线围成，没有角',12,'#999');s+=`<polygon points="400,95 350,190 450,190" fill="#FFB74D"/>`+face(400,155)+T(400,225,'三角形',17,'#333','middle',true)+T(400,248,'3条边，3个角',12,'#999');s+=`<rect x="615" y="100" width="92" height="92" fill="#81C784"/>`+face(661,145)+T(661,225,'正方形',17,'#333','middle',true)+T(661,248,'4条边都相等，4个直角',12,'#999');s+=`<rect x="80" y="300" width="122" height="80" fill="#64B5F6"/>`+face(141,338)+T(141,410,'长方形',17,'#333','middle',true)+T(141,433,'对边相等，4个直角',12,'#999');s+=`<polygon points="360,380 460,380 500,300 400,300" fill="#BA68C8"/>`+face(430,338)+T(430,410,'平行四边形',17,'#333','middle',true)+T(430,433,'两组对边分别平行且相等',12,'#999');s+=`<polygon points="605,380 720,380 690,300 635,300" fill="#4DB6AC"/>`+face(662,338)+T(662,410,'梯形',17,'#333','middle',true)+T(662,433,'只有一组对边平行',12,'#999');return s;},ext:{
+kp:['三角形按角分：锐角、直角、钝角三角形；按边分：等腰、等边','三角形内角和是180°，具有稳定性','四边形关系：正方形是特殊的长方形','三角形任意两边之和大于第三边'],
+ex:[{q:'例1：三角形两个角分别是50°和60°，第三个角是多少度？',s:['180°−50°−60°＝70°']},{q:'例2：3cm、5cm、9cm能围成三角形吗？',s:['3＋5＝8＜9','不能围成']}],
+pr:[{q:'1. 等边三角形每个角是多少度？',a:'60°'},{q:'2. 正方形是特殊的平行四边形吗？',a:'是'},{q:'3. 直角三角形中两个锐角的和是多少度？',a:'90°'},{q:'4. 等腰三角形顶角80°，底角各是多少度？',a:'50°'},{q:'5. ★挑战：等腰三角形一个角是40°，另外两个角可能是多少度？',a:'两种情况：70°/70°或40°/100°',star:1}],
+tip:['自行车三角架用了三角形的稳定性'],warn:['等腰三角形角度问题常有两种答案']}});
+
+cards.push({m:3,t:'线与角',f:()=>{let s=`<line x1="65" y1="130" x2="235" y2="130" stroke="#1E88E5" stroke-width="4"/><circle cx="65" cy="130" r="6" fill="#1E88E5"/><circle cx="235" cy="130" r="6" fill="#1E88E5"/>`;s+=T(150,170,'线段：2个端点，可测量',14,'#555');s+=`<circle cx="315" cy="130" r="6" fill="#FB8C00"/>`+arrow(315,130,490,130,'#FB8C00',4);s+=T(400,170,'射线：1个端点，无限长',14,'#555');s+=arrow(640,130,745,130,'#43A047',4)+arrow(650,130,545,130,'#43A047',4);s+=T(645,170,'直线：没有端点，无限长',14,'#555');s+=`<line x1="60" y1="205" x2="740" y2="205" stroke="#eee" stroke-width="2"/>`;const ang=(cx,cy,a,label,sub,color)=>{const [x2,y2]=P(cx,cy,110,-a);let g=`<line x1="${cx}" y1="${cy}" x2="${cx+110}" y2="${cy}" stroke="${color}" stroke-width="4"/>`;g+=`<line x1="${cx}" y1="${cy}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${color}" stroke-width="4"/>`;if(a===90) g+=`<path d="M${cx+22},${cy} L${cx+22},${cy-22} L${cx},${cy-22}" fill="none" stroke="${color}" stroke-width="2.5"/>`;else{const [ax,ay]=P(cx,cy,34,-a);g+=`<path d="M${cx+34},${cy} A34,34 0 0 0 ${ax.toFixed(1)},${ay.toFixed(1)}" fill="none" stroke="${color}" stroke-width="2.5"/>`;}return g+T(cx+50,cy+42,label,17,color,'middle',true)+T(cx+50,cy+68,sub,14,'#789');};s+=ang(90,340,45,'锐角','小于90°','#1E88E5');s+=ang(345,340,90,'直角','等于90°','#43A047');s+=ang(580,340,135,'钝角','大于90°小于180°','#E53935');return s;},ext:{
+kp:['线段2个端点可测量；射线1个端点；直线没有端点','两点之间线段最短','角的大小与边的长短无关','角的分类：锐角＜90°＜钝角＜180°'],
+ex:[{q:'例1：3点整，时针和分针成什么角？',s:['相隔3大格：30°×3＝90°，直角']},{q:'例2：一个角是65°，余角和补角各是多少？',s:['余角：25°，补角：115°']}],
+pr:[{q:'1. 过两点可以画几条直线？过一点呢？',a:'两点1条；一点无数条'},{q:'2. 6点整时针分针成什么角？',a:'平角'},{q:'3. 135°的角是什么角？',a:'钝角'},{q:'4. 用三角板能拼出75°吗？',a:'能，45°＋30°＝75°'},{q:'5. ★挑战：圆形纸对折两次，折出的角是多少度？',a:'90°',star:1}],
+tip:['三角板的角要记牢：45°45°90°和30°60°90°'],warn:['角的大小和边画得长短没关系！']}});
+
+cards.push({m:3,t:'周长：绕一圈的长度',f:()=>{let s=`<rect x="120" y="150" width="320" height="200" fill="#DCEDC8"/>`;s+=T(200,230,'🌸',24)+T(290,280,'🌷',24)+T(370,220,'🌼',24)+T(240,320,'🌸',22);s+=`<rect x="120" y="150" width="320" height="200" fill="none" stroke="#E53935" stroke-width="5" stroke-dasharray="14,9"/>`;s+=T(105,140,'🐜',26);s+=T(280,132,'长 5 米',16,'#555','middle',true);s+=T(475,255,'宽',16,'#555')+T(475,278,'3米',16,'#555');s+=T(640,180,'周长 = (长＋宽)×2',20,'#333','middle',true);s+=T(640,230,'= (5＋3)×2',20,'#555','middle');s+=T(640,280,'= 16（米）',24,'#E65100','middle',true);return s+T(400,425,'小蚂蚁沿花坛边缘爬一圈的长度，就是花坛的周长',16,'#789');},ext:{
+kp:['周长：封闭图形一周的长度','长方形周长＝(长＋宽)×2；正方形周长＝边长×4','圆的周长＝πd＝2πr'],
+ex:[{q:'例1：正方形边长8厘米，周长是多少？',s:['8×4＝32厘米']},{q:'例2：圆半径5厘米，周长是多少？',s:['2×3.14×5＝31.4厘米']}],
+pr:[{q:'1. 长方形长12米、宽8米，周长？',a:'40米'},{q:'2. 正方形周长36厘米，边长？',a:'9厘米'},{q:'3. 圆的直径10米，周长？',a:'31.4米'},{q:'4. 用48厘米铁丝围成正方形，边长几厘米？',a:'12厘米'},{q:'5. ★挑战：两个边长4厘米正方形拼成长方形，周长多少？',a:'24厘米（不是32！）',star:1}],
+tip:['图形拼合后周长会变小'],warn:['周长和面积单位不同']}});
+
+cards.push({m:3,t:'面积：覆盖的大小',f:()=>{let s='';for(let r=0;r<4;r++)for(let c=0;c<6;c++)s+=`<rect x="${110+c*55}" y="${115+r*55}" width="53" height="53" fill="#B3E5FC" stroke="#fff" stroke-width="3" rx="3"/>`;s+=arrow(490,80,415,120,'#FB8C00',2.5)+T(560,72,'每个小方格是1平方厘米',14,'#FB8C00');s+=T(275,375,'长：6 格',15,'#555')+T(490,225,'宽：4 格',15,'#555','start');s+=T(620,270,'面积 = 长 × 宽',19,'#333','middle',true);s+=T(620,315,'= 6 × 4',19,'#555','middle');s+=T(620,360,'= 24（平方厘米）',21,'#E65100','middle',true);return s+T(400,432,'数一数：一共铺了 24 个小方格',16,'#789');},ext:{
+kp:['面积：物体表面或图形的大小','长方形面积＝长×宽','面积单位进率：1平方米=100平方分米（进率100！）'],
+ex:[{q:'例1：教室长9米、宽6米，面积是多少？',s:['9×6＝54平方米']},{q:'例2：正方形手帕边长2分米，面积多少平方厘米？',s:['4平方分米＝400平方厘米']}],
+pr:[{q:'1. 长方形长15厘米、宽4厘米，面积？',a:'60平方厘米'},{q:'2. 正方形边长7米，面积和周长各是多少？',a:'面积49，周长28米'},{q:'3. 3平方米＝（ ）平方分米',a:'300'},{q:'4. 长方形面积72平方米，长9米，宽是多少？',a:'8米'},{q:'5. ★挑战：周长相等的长方形和正方形，谁面积大？',a:'正方形大',star:1}],
+tip:['面积单位相邻进率是100'],warn:['周长相等，面积不一定相等！']}});
+
+cards.push({m:3,t:'图形面积公式：转化的智慧',f:()=>{let s=`<line x1="272" y1="70" x2="272" y2="390" stroke="#eee" stroke-width="2"/><line x1="540" y1="70" x2="540" y2="390" stroke="#eee" stroke-width="2"/>`;s+=`<polygon points="55,190 185,190 225,110 95,110" fill="#FFCC80" stroke="#FB8C00" stroke-width="2"/>`;s+=`<line x1="185" y1="190" x2="185" y2="110" stroke="#E53935" stroke-width="2.5" stroke-dasharray="6"/>`;s+=arrow(140,205,140,240,'#789',2.5);s+=`<rect x="70" y="250" width="130" height="80" fill="#FFE0B2" stroke="#FB8C00" stroke-width="2"/>`;s+=T(138,365,'沿高剪开，平移拼成长方形',12.5,'#555')+T(138,392,'面积＝底×高',15,'#E65100','middle',true);s+=`<polygon points="310,200 430,200 390,110 " fill="#F48FB1" stroke="#EC407A" stroke-width="2"/>`;s+=`<polygon points="430,200 390,110 510,110" fill="#FCE4EC" stroke="#EC407A" stroke-width="2" stroke-dasharray="5"/>`;s+=T(408,250,'两个完全一样的三角形',12.5,'#555')+T(408,272,'拼成平行四边形',12.5,'#555');s+=T(408,392,'面积＝底×高÷2',15,'#C2185B','middle',true);let circ=`<circle cx="650" cy="155" r="62" fill="#B2DFDB" stroke="#00897B" stroke-width="2"/>`;for(let i=0;i<8;i++){const [x,y]=P(650,155,62,i*45);circ+=`<line x1="650" y1="155" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#00897B" stroke-width="1.5"/>`;}s+=circ+arrow(650,230,650,262,'#789',2.5);s+=`<rect x="575" y="272" width="150" height="52" fill="#B2DFDB" stroke="#00897B" stroke-width="2"/>`;s+=T(650,300,'近似长方形',13,'#00695C');s+=T(650,365,'切成小扇形拼一拼',12.5,'#555')+T(650,392,'面积＝πr²',15,'#00695C','middle',true);return s+T(400,432,'新图形 → 转化 → 学过的图形，这就是"转化"思想',15,'#8E24AA');},ext:{
+kp:['平行四边形＝底×高','三角形＝底×高÷2','梯形＝(上底＋下底)×高÷2','圆＝πr²'],
+ex:[{q:'例1：三角形底10厘米、高6厘米，面积？',s:['10×6÷2＝30平方厘米']},{q:'例2：梯形上底3、下底7、高4米，面积？',s:['(3＋7)×4÷2＝20平方米']},{q:'例3：圆半径3厘米，面积？',s:['3.14×3×3＝28.26平方厘米']}],
+pr:[{q:'1. 平行四边形底8米、高5米，面积？',a:'40平方米'},{q:'2. 三角形面积24平方厘米，底8厘米，高？',a:'6厘米'},{q:'3. 圆直径8米，面积？',a:'50.24平方米'},{q:'4. 梯形上底2、下底6、高5分米，面积？',a:'20平方分米'},{q:'5. ★挑战：等底等高的三角形和平行四边形，面积关系？',a:'三角形是一半',star:1}],
+tip:['求三角形/梯形面积忘了÷2最容易错！'],warn:['底和高必须互相垂直']}});
+
+cards.push({m:3,t:'立体图形家族',f:()=>{let s=box3d(58,160,80,80,26);s+=T(111,290,'正方体',16,'#333','middle',true)+T(111,320,'🎲 魔方',13,'#789');s+=box3d(195,175,115,65,26);s+=T(266,290,'长方体',16,'#333','middle',true)+T(266,320,'📦 牙膏盒',13,'#789');s+=`<ellipse cx="430" cy="245" rx="45" ry="14" fill="#90CAF9" stroke="#455A64" stroke-width="2"/><rect x="385" y="150" width="90" height="95" fill="#BBDEFB" stroke="none"/><line x1="385" y1="150" x2="385" y2="245" stroke="#455A64" stroke-width="2"/><line x1="475" y1="150" x2="475" y2="245" stroke="#455A64" stroke-width="2"/><ellipse cx="430" cy="150" rx="45" ry="14" fill="#90CAF9" stroke="#455A64" stroke-width="2"/>`;s+=T(430,290,'圆柱',16,'#333','middle',true)+T(430,320,'🥫 水杯',13,'#789');s+=`<polygon points="580,140 537,248 623,248" fill="#BBDEFB" stroke="none"/><ellipse cx="580" cy="248" rx="43" ry="13" fill="#90CAF9" stroke="#455A64" stroke-width="2"/><line x1="580" y1="140" x2="537" y2="248" stroke="#455A64" stroke-width="2"/><line x1="580" y1="140" x2="623" y2="248" stroke="#455A64" stroke-width="2"/>`;s+=T(580,290,'圆锥',16,'#333','middle',true)+T(580,320,'🍦 冰淇淋筒',13,'#789');s+=`<circle cx="705" cy="198" r="52" fill="#BBDEFB" stroke="#455A64" stroke-width="2"/><ellipse cx="705" cy="198" rx="52" ry="16" fill="none" stroke="#455A64" stroke-width="1.5" stroke-dasharray="5"/>`;s+=T(705,290,'球',16,'#333','middle',true)+T(705,320,'🏀 篮球',13,'#789');return s+T(400,390,'长方体、正方体有 6个面、12条棱、8个顶点',16,'#8E24AA','middle',true)+T(400,422,'圆柱上下两个面是完全相同的圆；圆锥只有一个顶点',14,'#789');},ext:{
+kp:['长方体/正方体：6个面、12条棱、8个顶点','正方体是特殊的长方体','圆柱：上下底是相同的圆','长方体表面积＝(长×宽＋长×高＋宽×高)×2'],
+ex:[{q:'例1：棱长4厘米的正方体，棱长总和与表面积？',s:['棱长总和48厘米，表面积96平方厘米']},{q:'例2：长方体长5宽4高3分米，表面积？',s:['(20+15+12)×2＝94平方分米']}],
+pr:[{q:'1. 正方体有几个面？',a:'6个'},{q:'2. 圆柱侧面沿高剪开是什么图形？',a:'长方形'},{q:'3. 棱长2分米的正方体表面积？',a:'24平方分米'},{q:'4. 长方体最多有几个面完全相同？',a:'3组'},{q:'5. ★挑战：无盖正方体鱼缸棱长5分米，需要玻璃多少平方分米？',a:'125（只算5个面）',star:1}],
+tip:['遇到"粉刷教室""无盖水箱"要想清楚算几个面'],warn:['表面积别忘了×2；无盖的要减一个面']}});
+
+cards.push({m:3,t:'体积：占空间的大小',f:()=>{let s='';const x0=140,y0=200,cw=45,W=4,H=2,D=3,dd=15;s+=box3d(x0,y0,W*cw,H*cw,D*dd);for(let c=1;c<W;c++) s+=`<line x1="${x0+c*cw}" y1="${y0}" x2="${x0+c*cw}" y2="${y0+H*cw}" stroke="#455A64" stroke-width="1.2"/>`;s+=`<line x1="${x0}" y1="${y0+cw}" x2="${x0+W*cw}" y2="${y0+cw}" stroke="#455A64" stroke-width="1.2"/>`;for(let c=0;c<=W;c++) s+=`<line x1="${x0+c*cw}" y1="${y0}" x2="${x0+c*cw+D*dd}" y2="${y0-D*dd}" stroke="#455A64" stroke-width="1"/>`;for(let k=1;k<D;k++) s+=`<line x1="${x0+k*dd}" y1="${y0-k*dd}" x2="${x0+W*cw+k*dd}" y2="${y0-k*dd}" stroke="#455A64" stroke-width="1"/>`;for(let k=1;k<D;k++) s+=`<line x1="${x0+W*cw+k*dd}" y1="${y0-k*dd}" x2="${x0+W*cw+k*dd}" y2="${y0+H*cw-k*dd}" stroke="#455A64" stroke-width="1"/>`;s+=`<line x1="${x0+W*cw+D*dd}" y1="${y0-D*dd+cw}" x2="${x0+W*cw}" y2="${y0+cw}" stroke="#455A64" stroke-width="1"/>`;s+=T(x0+W*cw/2,y0+H*cw+35,'长：4',15,'#555');s+=T(x0-38,y0+H*cw/2+5,'高：2',15,'#555');s+=T(x0+W*cw+D*dd/2+30,y0-D*dd-12,'宽：3',15,'#555');s+=T(230,375,'每个小方块是 1 立方厘米',14,'#789');s+=T(600,150,'体积 = 长 × 宽 × 高',20,'#333','middle',true);s+=T(600,200,'= 4 × 3 × 2',20,'#555','middle');s+=T(600,250,'= 24（立方厘米）',22,'#E65100','middle',true);s+=T(600,320,'💧 乌鸦喝水：石子占了空间，',14,'#1565C0');s+=T(600,345,'水面就升高了 —— 排水法测体积',14,'#1565C0');return s+T(400,430,'容器所能容纳物体的体积，叫做它的容积',15,'#8E24AA');},ext:{
+kp:['长方体体积＝长×宽×高','统一公式：V＝底面积×高','体积单位进率1000','圆柱V=πr²h；圆锥V=πr²h÷3'],
+ex:[{q:'例1：长方体长6宽5高4厘米，体积？',s:['6×5×4＝120立方厘米']},{q:'例2：石头放入水槽升高3厘米，底面积200平方厘米，体积？',s:['200×3＝600立方厘米']}],
+pr:[{q:'1. 棱长5分米的正方体体积？',a:'125立方分米'},{q:'2. 2.5升＝（ ）毫升',a:'2500毫升'},{q:'3. 圆柱底面积30、高10厘米，体积？',a:'300立方厘米'},{q:'4. 等底等高圆锥体积是圆柱的几分之几？',a:'1/3'},{q:'5. ★挑战：水箱长8宽5分米，倒入80升水，水深多少？',a:'2分米',star:1}],
+tip:['不规则物体求体积用排水法'],warn:['体积进率是1000，面积是100']}});
+
+cards.push({m:3,t:'图形的运动：平移·旋转·轴对称',f:()=>{const fish=(cx,cy,op)=>`<g opacity="${op}"><ellipse cx="${cx}" cy="${cy}" rx="38" ry="21" fill="#4FC3F7"/><polygon points="${cx-34},${cy} ${cx-60},${cy-18} ${cx-60},${cy+18}" fill="#4FC3F7"/><circle cx="${cx+18}" cy="${cy-5}" r="4" fill="#fff"/></g>`;let s=`<line x1="272" y1="70" x2="272" y2="380" stroke="#eee" stroke-width="2"/><line x1="540" y1="70" x2="540" y2="380" stroke="#eee" stroke-width="2"/>`;s+=`<line x1="60" y1="235" x2="245" y2="235" stroke="#B0BEC5" stroke-width="1.5" stroke-dasharray="6"/>`;s+=fish(115,185,0.3)+fish(200,185,1);s+=arrow(120,240,200,240,'#FB8C00',3);s+=T(160,300,'平移',19,'#E65100','middle',true)+T(160,330,'方向、大小不变',13,'#789')+T(160,352,'位置改变',13,'#789');let pw='';for(let i=0;i<4;i++) pw+=`<path d="M405,185 L405,110 Q445,110 445,150 Z" fill="${['#EF5350','#FFCA28','#66BB6A','#42A5F5'][i]}" transform="rotate(${i*90} 405 185)"/>`;s+=pw+`<circle cx="405" cy="185" r="8" fill="#795548"/>`;s+=`<path d="M480,130 A80,80 0 0 1 480,240" fill="none" stroke="#FB8C00" stroke-width="3"/>`+arrow(480,235,472,247,'#FB8C00',3);s+=T(405,300,'旋转',19,'#E65100','middle',true)+T(405,330,'绕一个点或一条轴',13,'#789')+T(405,352,'转动',13,'#789');s+=`<line x1="655" y1="90" x2="655" y2="270" stroke="#8E24AA" stroke-width="2.5" stroke-dasharray="8"/>`;s+=`<ellipse cx="612" cy="150" rx="34" ry="22" fill="#F48FB1" transform="rotate(-25 612 150)"/><ellipse cx="618" cy="205" rx="26" ry="17" fill="#F8BBD0" transform="rotate(20 618 205)"/>`;s+=`<ellipse cx="698" cy="150" rx="34" ry="22" fill="#F48FB1" transform="rotate(25 698 150)"/><ellipse cx="692" cy="205" rx="26" ry="17" fill="#F8BBD0" transform="rotate(-20 692 205)"/>`;s+=`<line x1="655" y1="120" x2="655" y2="235" stroke="#795548" stroke-width="5" stroke-linecap="round"/>`;s+=T(655,300,'轴对称',19,'#8E24AA','middle',true)+T(655,330,'沿对称轴对折',13,'#789')+T(655,352,'两边完全重合',13,'#789');return s+T(400,425,'运动前后，图形的形状和大小都不改变',16,'#455A64');},ext:{
+kp:['平移：沿直线移动，方向大小不变','旋转：绕点或轴转动','轴对称：对折后两边完全重合','描述旋转三要素：点、方向、角度'],
+ex:[{q:'例1：正方形有几条对称轴？圆呢？',s:['正方形4条，圆无数条']},{q:'例2：分针从12走到3，旋转多少度？',s:['360°÷4＝90°']}],
+pr:[{q:'1. 拉抽屉是平移还是旋转？',a:'平移'},{q:'2. 等边三角形有几条对称轴？',a:'3条'},{q:'3. 长方形有几条对称轴？',a:'2条（对角线不是！）'},{q:'4. 哪些字母是轴对称的：A、B、S、H？',a:'A、B、H'},{q:'5. ★挑战：分针走30分钟，时针转了多少度？',a:'15°',star:1}],
+tip:['判断对称轴：拿张纸真的折一折'],warn:['长方形的对角线不是对称轴！']}});
+
+cards.push({m:3,t:'位置与方向',f:()=>{let s=`<circle cx="175" cy="230" r="95" fill="#FFF8E1" stroke="#FBC02D" stroke-width="3"/>`;s+=`<line x1="175" y1="150" x2="175" y2="310" stroke="#F9A825" stroke-width="2"/><line x1="95" y1="230" x2="255" y2="230" stroke="#F9A825" stroke-width="2"/>`;s+=`<polygon points="175,140 165,168 185,168" fill="#E53935"/>`;s+=T(175,128,'北',18,'#E53935','middle',true)+T(272,237,'东',18,'#555','middle',true)+T(175,352,'南',18,'#555','middle',true)+T(78,237,'西',18,'#555','middle',true);s+=T(175,405,'上北下南，左西右东',15,'#789');for(let r=0;r<4;r++)for(let c=0;c<5;c++){const x=420+c*60,y=105+r*60;const red=(c===2&&r===1);s+=`<rect x="${x}" y="${y}" width="56" height="56" rx="8" fill="${red?'#EF5350':'#E3F2FD'}" stroke="#fff" stroke-width="3"/>`;if(red)s+=T(x+28,y+36,'(3,3)',15,'#fff','middle',true);}for(let c=0;c<5;c++) s+=T(450+c*60,372,`第${c+1}列`,12,'#789');for(let r=0;r<4;r++) s+=T(398,142+r*60,`第${4-r}行`,12,'#789','end');return s+T(570,420,'数对（列, 行）：先数列，再数行',16,'#1565C0','middle',true);},ext:{
+kp:['方位：上北下南，左西右东','数对(列,行)：先说列，再说行','描述路线：方向＋距离'],
+ex:[{q:'例1：小红座位在第4列第2行，用数对表示',s:['(4, 2)']},{q:'例2：数对(3,5)和(5,3)一样吗？',s:['不一样！顺序很重要']}],
+pr:[{q:'1. 黑板在北面，你的背面是什么方向？',a:'南面'},{q:'2. 用数对表示：第1列第6行',a:'(1,6)'},{q:'3. 数对(4,7)中的4表示什么？',a:'第4列'},{q:'4. 太阳从哪升起从哪落下？',a:'东升西落'},{q:'5. ★挑战：A点(2,3)向右移3格再向上移2格，新数对？',a:'(5,5)',star:1}],
+tip:['记数对口诀："列在前、行在后"'],warn:['数对顺序不能换！']}});
+
+cards.push({m:4,t:'常用计量单位换算',f:()=>{const chain=(y,icon,units,rates,color,bg)=>{let g=T(55,y+30,icon,26,'#333','start');units.forEach((u,i)=>{const x=115+i*128;g+=rrect(x,y,92,46,bg,10,color,2)+T(x+46,y+30,u,17,color,'middle',true);if(i<units.length-1){g+=arrow(x+96,y+23,x+124,y+23,color,2.5);g+=T(x+110,y+62,'×'+rates[i],13,color,'middle',true);}});return g;};let s=chain(95,'📏',['千米','米','分米','厘米','毫米'],[1000,10,10,10],'#1565C0','#E3F2FD');s+=chain(215,'⚖️',['吨','千克','克'],[1000,1000],'#E65100','#FFF3E0');s+=chain(335,'⏰',['时','分','秒'],[60,60],'#2E7D32','#E8F5E9');s+=T(560,245,'1吨=1000千克',14,'#789','start')+T(560,275,'1千克=1000克',14,'#789','start');s+=T(500,365,'1时=60分，1分=60秒',14,'#789','start');return s+T(400,432,'大单位 → 小单位要乘进率；小单位 → 大单位要除以进率',16,'#8E24AA');},ext:{
+kp:['长度：1千米=1000米，1米=10分米=100厘米','质量：1吨=1000千克，1千克=1000克','时间：1时=60分，1分=60秒'],
+ex:[{q:'例1：3千米50米＝（ ）米',s:['3000＋50＝3050米']},{q:'例2：150分＝（ ）时（ ）分',s:['150÷60＝2……30','2时30分']}],
+pr:[{q:'1. 5米＝（ ）厘米',a:'500'},{q:'2. 4000千克＝（ ）吨',a:'4'},{q:'3. 2时15分＝（ ）分',a:'135'},{q:'4. 7080米＝（ ）千米（ ）米',a:'7千米80米'},{q:'5. ★挑战：一节课40分钟，8:20上课，几点下课？',a:'9:00',star:1}],
+tip:['时间进率是60不是100！'],warn:['做题先看单位统不统一']}});
+
+cards.push({m:4,t:'三种统计图',f:()=>{let s=`<line x1="272" y1="70" x2="272" y2="390" stroke="#eee" stroke-width="2"/><line x1="540" y1="70" x2="540" y2="390" stroke="#eee" stroke-width="2"/>`;s+=`<line x1="70" y1="280" x2="240" y2="280" stroke="#455A64" stroke-width="2"/><line x1="70" y1="280" x2="70" y2="105" stroke="#455A64" stroke-width="2"/>`;[[88,110,'#EF5350'],[128,70,'#FFCA28'],[168,140,'#66BB6A'],[208,95,'#42A5F5']].forEach(([x,h,c])=>s+=`<rect x="${x}" y="${280-h}" width="28" height="${h}" fill="${c}" rx="3"/>`);s+=T(155,320,'条形统计图',17,'#1565C0','middle',true)+T(155,348,'比多少一目了然',13,'#789');s+=`<line x1="340" y1="280" x2="510" y2="280" stroke="#455A64" stroke-width="2"/><line x1="340" y1="280" x2="340" y2="105" stroke="#455A64" stroke-width="2"/>`;const pts=[[355,220],[382,190],[409,205],[436,150],[463,165],[490,120]];s+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#FB8C00" stroke-width="3"/>`;pts.forEach(p=>s+=`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="#FB8C00"/>`);s+=T(425,320,'折线统计图',17,'#E65100','middle',true)+T(425,348,'看变化趋势',13,'#789');s+=sector(650,190,85,-90,90,'#EF5350')+sector(650,190,85,90,198,'#FFCA28')+sector(650,190,85,198,270,'#42A5F5');s+=T(692,175,'50%',15,'#fff','middle',true)+T(618,255,'30%',14,'#7a5c00','middle',true)+T(605,150,'20%',14,'#fff','middle',true);s+=T(650,320,'扇形统计图',17,'#2E7D32','middle',true)+T(650,348,'看部分占整体的比例',13,'#789');return s+T(400,425,'根据需要选择合适的统计图',16,'#455A64');},ext:{
+kp:['条形统计图：比较数量多少','折线统计图：反映变化趋势','扇形统计图：反映部分占整体比例','平均数＝总数÷份数'],
+ex:[{q:'例1：表示一周气温变化选哪种图？',s:['选折线统计图']},{q:'例2：5次跳绳成绩120、130、125、135、140，平均数？',s:['总数650÷5＝130']}],
+pr:[{q:'1. 比较四个班人数多少选什么图？',a:'条形统计图'},{q:'2. 表示各兴趣小组占比选什么图？',a:'扇形统计图'},{q:'3. 3个数平均数是12，总和？',a:'36'},{q:'4. 三科92、96、88，平均分？',a:'92分'},{q:'5. ★挑战：平均水深1.2米，1.4米高的人下水安全吗？',a:'不一定！平均数不代表处处如此',star:1}],
+tip:['选图口诀：比多少用条形，看变化用折线，看占比用扇形'],warn:['平均数会被极端值拉偏']}});
+
+cards.push({m:4,t:'可能性',f:()=>{const jar=(x,balls,label,sub,color)=>{let g=`<rect x="${x+35}" y="118" width="70" height="22" fill="#CFD8DC" rx="4"/>`;g+=rrect(x,140,140,175,'#ECEFF1',18,'#90A4AE',3);balls.forEach((c,i)=>{const bx=x+40+(i%3)*30, by=200+Math.floor(i/3)*32;g+=`<circle cx="${bx}" cy="${by}" r="14" fill="${c==='r'?'#E53935':'#fff'}" stroke="${c==='r'?'#C62828':'#B0BEC5'}" stroke-width="2"/>`;});g+=T(x+70,355,label,21,color,'middle',true);return g+T(x+70,388,sub,13.5,'#789');};let s=T(400,95,'🖐 从罐子里摸一个球，能摸到红球吗？',18,'#555');s+=jar(75,['r','r','r','r','r','r'],'一定','全是红球，一定摸到','#E53935');s+=jar(330,['r','w','r','w','w','r'],'可能','红白都有，可能摸到','#FB8C00');s+=jar(585,['w','w','w','w','w','w'],'不可能','没有红球，不可能摸到','#607D8B');return s+T(400,432,'事件的发生有"一定、可能、不可能"三种情况',16,'#8E24AA');},ext:{
+kp:['一定发生：太阳从东边升起','不可能发生：公鸡下蛋','可能发生：明天下雨','数量多的摸到可能性大'],
+ex:[{q:'例1：5红1白球，摸到哪种球可能性大？',s:['摸到红球可能性大']},{q:'例2：掷硬币，正面朝上可能性是多少？',s:['1/2']}],
+pr:[{q:'1. "太阳从西边升起"是哪种情况？',a:'不可能'},{q:'2. 3黄2蓝球，摸到什么球可能性大？',a:'黄球'},{q:'3. 掷骰子掷出7点？掷出小于7？',a:'不可能；一定'},{q:'4. 怎样使摸到红白球可能性相等？',a:'放同样多'},{q:'5. ★挑战：摸了10次都是红球，能确定全是红球吗？',a:'不能确定',star:1}],
+tip:['做游戏公平性判断：每人获胜可能性相等才公平'],warn:['"可能性大"不等于"一定"！']}});
+
+cards.push({m:4,t:'数学解题工具箱（常用思想方法）',f:()=>{const tools=[['画线段图','用线段表示数量关系','📊',()=>`<line x1="30" y1="66" x2="130" y2="66" stroke="#1E88E5" stroke-width="7" stroke-linecap="round"/><line x1="30" y1="82" x2="90" y2="82" stroke="#FB8C00" stroke-width="7" stroke-linecap="round"/>`],['列方程','⚖️ 等量代换：x＋3＝8','',null],['假设法','🐔🐰 鸡兔同笼：先假设全是鸡','',null],['植树问题','🌳🌳🌳 两端都种：棵数＝间隔＋1','',null],['归一归总','先求出"1份"是多少','1️⃣',null],['转化思想','把新问题变成学过的问题 ➜','',null]];const pos=[[55,80],[295,80],[535,80],[55,225],[295,225],[535,225]];const cols=['#E3F2FD','#FFF3E0','#E8F5E9','#F3E5F5','#FCE4EC','#E0F7FA'];const fgs=['#1565C0','#E65100','#2E7D32','#7B1FA2','#C2185B','#00838F'];let s='';tools.forEach(([name,desc,icon,draw],i)=>{const [x,y]=pos[i];s+=rrect(x,y,210,125,cols[i],14,fgs[i],2);s+=T(x+105,y+38,(icon?icon+' ':'')+name,18,fgs[i],'middle',true);if(draw)s+=`<g transform="translate(${x},${y})">${draw()}</g>`;s+=T(x+105,y+98,desc,12.5,'#556');});s+=`<polygon points="320,375 480,375 465,430 335,430" fill="#8D6E63"/><rect x="330" y="362" width="140" height="14" rx="6" fill="#6D4C41"/><rect x="378" y="350" width="44" height="14" rx="6" fill="#5D4037"/>`;return s+T(560,410,'遇到难题，打开工具箱试一试！',15,'#8E24AA','start');},ext:{
+kp:['画线段图：数量关系一眼看清','列方程：找等量关系','假设法：先假设再调整','植树问题：两端都种＝间隔+1'],
+ex:[{q:'例1（鸡兔同笼）：鸡兔共8只，脚共22只，各几只？',s:['假设全是鸡：16只脚','差22−16＝6只脚','6÷2＝3只兔，鸡5只']},{q:'例2（植树）：100米路每隔5米种一棵（两端都种），几棵？',s:['100÷5＝20','20＋1＝21棵']},{q:'例3（方程）：3x＋7＝25，求x',s:['3x＝18，x＝6']}],
+pr:[{q:'1. 龟鹤共10只，脚共32只，各几只？',a:'龟6只，鹤4只'},{q:'2. 圆形花坛周长60米，每隔6米放一盆花，几盆？',a:'10盆（不加1）'},{q:'3. 解方程：5x−8＝27',a:'x＝7'},{q:'4. 3支笔24元，7支多少元？',a:'56元'},{q:'5. ★挑战：1楼到3楼30秒，到6楼要几秒？',a:'75秒（植树思维）',star:1}],
+tip:['读完题先画个图、列个表'],warn:['爬楼梯问题次数和段数差1，最容易掉坑']}});
+
+/* ---------- SVG 包装 ---------- */
+const wrap=(inner,title,m)=>`<svg viewBox="0 0 800 470" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC','Microsoft YaHei',sans-serif">
+<rect width="800" height="470" fill="#FDFDFE"/>
+<rect x="0" y="0" width="800" height="6" fill="${MC[m]}"/>
+${T(400,42,title,25,'#334155','middle',true)}
+<g transform="translate(0,20)">${inner}</g></svg>`;
+const thumbWrap=(inner,m)=>`<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC','Microsoft YaHei',sans-serif" preserveAspectRatio="xMidYMid slice">
+<rect width="800" height="500" fill="#FDFDFE"/>
+<rect x="0" y="0" width="800" height="6" fill="${MC[m]}"/>
+<g transform="translate(0,15)">${inner}</g></svg>`;
+
+/* ---------- 状态管理 ---------- */
+const state = { done: new Array(cards.length).fill(false), star: new Array(cards.length).fill(false) };
+const mascotLines={
+  0:['数小萌：这是核心知识哦，记牢它们～','数小萌：慢慢看，理解了就掌握了一半！'],
+  1:['数小萌：跟着例题一步步想，你也能做到！','数小萌：例题是解题的钥匙，仔细看步骤～'],
+  2:['数小萌：先自己做，别急着看答案哦！','数小萌：★挑战题有点难，加油试试看！'],
+  3:['数小萌：这些小技巧能帮你少犯错！','数小萌：易错点要牢牢记住，别踩坑～']
+};
+
+/* ---------- 首页渲染 ---------- */
+function renderGrid(){
+  for(let m=1;m<=4;m++){
+    const g=document.getElementById('grid'+m);
+    g.innerHTML='';
+    cards.forEach((c,i)=>{
+      if(c.m!==m)return;
+      const div=document.createElement('div');
+      div.className='kcard'; div.dataset.m=c.m;
+      div.innerHTML=`
+        <div class="kcard-thumb">
+          ${state.star[i]?'<div class="kcard-star">⭐</div>':''}
+          ${state.done[i]?'<div class="kcard-done">✓已掌握</div>':''}
+          <div class="kcard-num">${i+1}</div>
+          ${thumbWrap(c.f(),c.m)}
+        </div>
+        <div class="kcard-body">
+          <div class="kcard-title">${c.t}</div>
+          <span class="kcard-tag m${c.m}">${MODNAMES[c.m]}</span>
+        </div>`;
+      div.onclick=()=>openModal(i);
+      g.appendChild(div);
+    });
+  }
+  document.getElementById('starCountTop').textContent=state.star.filter(Boolean).length;
+  document.getElementById('doneCountTop').textContent=state.done.filter(Boolean).length;
+}
+renderGrid();
+
+document.getElementById('nav').addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-m]');
+  if(!btn)return;
+  document.querySelectorAll('#nav button[data-m]').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const m=btn.dataset.m;
+  document.querySelectorAll('.mod-block').forEach(b=>{
+    b.style.display=(m==='0'||b.dataset.modblock===m)?'':'none';
+  });
+});
+
+/* ---------- 学习模式 ---------- */
+let cur=0, curTab=0;
+const modal=document.getElementById('modal');
+const TABS=['📖 要点','✏️ 例题','📝 练习','💡 技巧'];
+const viewerWrap=document.getElementById('viewerWrap');
+const viewerCanvas=document.getElementById('viewerCanvas');
+const tabBodyWrap=document.getElementById('tabBodyWrap');
+
+function openModal(i){
+  cur=i; curTab=0; resetZoomState();
+  render();
+  modal.classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){ modal.classList.remove('show'); document.body.style.overflow=''; renderGrid(); }
+function navCard(d){ cur=(cur+d+cards.length)%cards.length; curTab=0; resetZoomState(); render(); }
+
+function render(){
+  const c=cards[cur];
+  document.getElementById('mNo').textContent=`${cur+1}/${cards.length}`;
+  document.getElementById('mTitle').textContent=c.t;
+  viewerCanvas.innerHTML=wrap(c.f(),c.t,c.m);
+  document.getElementById('mTabs').innerHTML=TABS.map((t,i)=>`<button class="${i===curTab?'on':''}" onclick="switchTab(${i})">${t}</button>`).join('');
+  const lines=mascotLines[curTab];
+  document.getElementById('mascotMsg').textContent=lines[Math.floor(Math.random()*lines.length)];
+  const e=c.ext, b=document.getElementById('mBody');
+  if(curTab===0){
+    b.innerHTML='<h4>核心知识点</h4><ul class="kp-list">'+e.kp.map(k=>`<li>${k}</li>`).join('')+'</ul>';
+  }else if(curTab===1){
+    b.innerHTML=e.ex.map(x=>`<div class="ex-card"><div class="q">${x.q}</div><div class="s">${x.s.map(l=>`<div>▸ ${l}</div>`).join('')}</div></div>`).join('');
+  }else if(curTab===2){
+    b.innerHTML='<h4>先自己做，再点"看答案"核对 ✍️</h4>'+e.pr.map((p,i)=>`<div class="pr-card"><div class="q">${p.star?'<b class="star">★挑战 </b>':''}${p.q}</div><button class="reveal" onclick="revealAns(this)">看答案</button><div class="ans">✅ ${p.a}</div></div>`).join('');
+  }else{
+    b.innerHTML='<h4>学习技巧</h4>'+e.tip.map(t=>`<div class="tip-card">💡 ${t}</div>`).join('')
+      +(e.warn&&e.warn.length?'<h4>易错警示</h4>'+e.warn.map(w=>`<div class="warn-card">⚠️ ${w}</div>`).join(''):'');
+  }
+  tabBodyWrap.scrollTop=0;
+  document.getElementById('progSlider').value=cur;
+  document.getElementById('progLeft').textContent=cur+1;
+  const doneBtn=document.getElementById('doneBtn'), starBtn=document.getElementById('starBtn');
+  doneBtn.textContent = state.done[cur] ? '✅ 已掌握' : '☐ 标记已掌握';
+  doneBtn.classList.toggle('on', state.done[cur]);
+  starBtn.textContent = state.star[cur] ? '⭐ 已收藏' : '☆ 收藏难点';
+  starBtn.classList.toggle('on', state.star[cur]);
+}
+function switchTab(i){ curTab=i; render(); }
+function revealAns(btn){
+  const ansEl=btn.nextElementSibling;
+  const wasShown=ansEl.classList.contains('show');
+  ansEl.classList.toggle('show');
+  if(!wasShown) popStar(btn);
+}
+function popStar(el){
+  const rect=el.getBoundingClientRect();
+  const star=document.createElement('div');
+  star.className='star-pop'; star.textContent='⭐';
+  star.style.left=(rect.left+rect.width/2-16)+'px';
+  star.style.top=(rect.top-10)+'px';
+  document.body.appendChild(star);
+  setTimeout(()=>star.remove(),800);
+}
+function toggleDone(){
+  state.done[cur]=!state.done[cur];
+  if(state.done[cur]) popStar(document.getElementById('doneBtn'));
+  render();
+  document.getElementById('starCountTop').textContent=state.star.filter(Boolean).length;
+  document.getElementById('doneCountTop').textContent=state.done.filter(Boolean).length;
+}
+function toggleStar(){
+  state.star[cur]=!state.star[cur];
+  render();
+  document.getElementById('starCountTop').textContent=state.star.filter(Boolean).length;
+}
+
+document.getElementById('prevBtn').onclick=()=>navCard(-1);
+document.getElementById('nextBtn').onclick=()=>navCard(1);
+document.getElementById('progSlider').addEventListener('input',e=>{ cur=+e.target.value; curTab=0; resetZoomState(); render(); });
+modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+document.addEventListener('keydown',e=>{
+  if(!modal.classList.contains('show'))return;
+  if(e.key==='ArrowLeft')navCard(-1);
+  else if(e.key==='ArrowRight')navCard(1);
+  else if(e.key==='Escape')closeModal();
+});
+
+/* ---------- 无极缩放 + 拖拽 + 滑动翻页 ---------- */
+let scale=1, tx=0, ty=0;
+let pinchStartDist=0, pinchStartScale=1;
+let dragging=false, dragStartX=0, dragStartY=0, dragOrigX=0, dragOrigY=0;
+let swipeStartX=0, swipeStartY=0, swipeStartT=0, isSwipeCandidate=false, movedForZoom=false;
+
+function applyTransform(snap){
+  viewerCanvas.classList.toggle('snap', !!snap);
+  viewerCanvas.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
+}
+function resetZoomState(){ scale=1; tx=0; ty=0; applyTransform(true); }
+function zoomBy(f){ scale=Math.min(5,Math.max(1,scale*f)); if(scale===1){tx=0;ty=0;} applyTransform(true); }
+function resetZoom(){ resetZoomState(); }
+function dist(t0,t1){ return Math.hypot(t0.clientX-t1.clientX, t0.clientY-t1.clientY); }
+
+viewerWrap.addEventListener('touchstart',e=>{
+  movedForZoom=false;
+  if(e.touches.length===2){
+    pinchStartDist=dist(e.touches[0],e.touches[1]);
+    pinchStartScale=scale;
+    isSwipeCandidate=false;
+  } else if(e.touches.length===1){
+    if(scale>1.02){
+      dragging=true;
+      dragStartX=e.touches[0].clientX; dragStartY=e.touches[0].clientY;
+      dragOrigX=tx; dragOrigY=ty;
+      isSwipeCandidate=false;
+    } else {
+      isSwipeCandidate=true;
+      swipeStartX=e.touches[0].clientX;
+      swipeStartY=e.touches[0].clientY;
+      swipeStartT=Date.now();
+    }
+  }
+},{passive:true});
+
+viewerWrap.addEventListener('touchmove',e=>{
+  if(e.touches.length===2){
+    e.preventDefault();
+    const d=dist(e.touches[0],e.touches[1]);
+    scale=Math.min(5,Math.max(1,pinchStartScale*(d/pinchStartDist)));
+    applyTransform(false);
+    movedForZoom=true;
+  } else if(e.touches.length===1){
+    if(dragging){
+      e.preventDefault();
+      tx=dragOrigX+(e.touches[0].clientX-dragStartX);
+      ty=dragOrigY+(e.touches[0].clientY-dragStartY);
+      applyTransform(false);
+    } else if(isSwipeCandidate){
+      const dx=e.touches[0].clientX-swipeStartX;
+      const dy=e.touches[0].clientY-swipeStartY;
+      if(Math.abs(dx)>10 && Math.abs(dx)>Math.abs(dy)) e.preventDefault();
+    }
+  }
+},{passive:false});
+
+viewerWrap.addEventListener('touchend',e=>{
+  if(dragging){ dragging=false; return; }
+  if(isSwipeCandidate && !movedForZoom){
+    const touch=e.changedTouches[0];
+    const dx=touch.clientX-swipeStartX;
+    const dy=touch.clientY-swipeStartY;
+    const dt=Date.now()-swipeStartT;
+    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5 && dt<600){
+      if(dx<0) navCard(1); else navCard(-1);
+    }
+  }
+  isSwipeCandidate=false;
+},{passive:true});
+
+let lastTap=0;
+viewerWrap.addEventListener('touchend',e=>{
+  const now=Date.now();
+  if(now-lastTap<300 && e.changedTouches.length===1 && !movedForZoom){
+    if(scale>1.02) resetZoom(); else { scale=2.2; applyTransform(true); }
+  }
+  lastTap=now;
+},{passive:true});
+
+viewerWrap.addEventListener('wheel',e=>{
+  e.preventDefault();
+  const f=e.deltaY<0?1.12:1/1.12;
+  scale=Math.min(5,Math.max(1,scale*f));
+  if(scale===1){tx=0;ty=0;}
+  applyTransform(false);
+},{passive:false});
+let mouseDragging=false, mdx=0, mdy=0, mox=0, moy=0;
+viewerWrap.addEventListener('mousedown',e=>{
+  if(scale<=1.02)return;
+  mouseDragging=true; mdx=e.clientX; mdy=e.clientY; mox=tx; moy=ty;
+});
+window.addEventListener('mousemove',e=>{
+  if(!mouseDragging)return;
+  tx=mox+(e.clientX-mdx); ty=moy+(e.clientY-mdy);
+  applyTransform(false);
+});
+window.addEventListener('mouseup',()=>{ mouseDragging=false; });
+viewerWrap.addEventListener('dblclick',()=>{ if(scale>1.02) resetZoom(); else { scale=2.2; applyTransform(true); } });
+
+/* ---------- 下载 PNG ---------- */
+function dlPNG(i){
+  const c=cards[i];
+  const svgStr='<?xml version="1.0" encoding="UTF-8"?>'+wrap(c.f(),c.t,c.m);
+  const blob=new Blob([svgStr],{type:'image/svg+xml;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const img=new Image();
+  img.onload=()=>{
+    const canvas=document.createElement('canvas');
+    canvas.width=1600; canvas.height=940;
+    const ctx=canvas.getContext('2d');
+    ctx.fillStyle='#fff'; ctx.fillRect(0,0,1600,940);
+    ctx.drawImage(img,0,0,1600,940);
+    canvas.toBlob(b=>{
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(b);
+      a.download=`${String(i+1).padStart(2,'0')}-${c.t.replace(/[：:·，,、\s]/g,'_')}.png`;
+      a.click(); URL.revokeObjectURL(a.href);
+    },'image/png');
+    URL.revokeObjectURL(url);
+  };
+  img.src=url;
+}
+
+/* ================= 组卷模块 ================= */
+const quizModal=document.getElementById('quizModal');
+let selMods=new Set([1,2,3,4]);
+let numPerPoint=2;
+let includeStar=1;
+
+function initQuizUI(){
+  const modOpts=document.getElementById('modOpts');
+  modOpts.innerHTML=[1,2,3,4].map(m=>`<button data-mm="${m}" class="on">${MODNAMES[m]}</button>`).join('');
+  modOpts.querySelectorAll('button').forEach(btn=>{
+    btn.onclick=()=>{
+      const m=+btn.dataset.mm;
+      btn.classList.toggle('on');
+      if(btn.classList.contains('on')) selMods.add(m); else selMods.delete(m);
+    };
+  });
+  document.getElementById('numOpts').querySelectorAll('button').forEach(btn=>{
+    btn.onclick=()=>{
+      document.getElementById('numOpts').querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on'); numPerPoint=+btn.dataset.n;
+    };
+  });
+  document.getElementById('starOpts').querySelectorAll('button').forEach(btn=>{
+    btn.onclick=()=>{
+      document.getElementById('starOpts').querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on'); includeStar=+btn.dataset.s;
+    };
+  });
+}
+initQuizUI();
+
+function openQuiz(){ quizModal.classList.add('show'); document.body.style.overflow='hidden'; document.getElementById('paperArea').classList.remove('show'); }
+function closeQuiz(){ quizModal.classList.remove('show'); document.body.style.overflow=''; }
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function generatePaper(){
+  const picked=[];
+  cards.forEach((c,idx)=>{
+    if(!selMods.has(c.m)) return;
+    let pool=c.ext.pr.filter(p=>includeStar || !p.star);
+    pool=shuffle(pool).slice(0,numPerPoint);
+    pool.forEach(p=>picked.push({q:p.q, a:p.a, src:c.t, star:p.star}));
+  });
+  const finalList=shuffle(picked);
+  const modsTxt=[...selMods].sort().map(m=>MODNAMES[m]).join('、');
+  document.getElementById('paperSub').textContent=`范围：${modsTxt} ｜ 共 ${finalList.length} 题`;
+  document.getElementById('paperQs').innerHTML=finalList.map((item,i)=>
+    `<div class="paper-q"><span class="qn">${i+1}. </span>${item.q.replace(/^\d+\.\s*/,'').replace(/^★挑战：/,'★ ')}<span class="src">[${item.src}]</span></div>`
+  ).join('');
+  document.getElementById('answerSheet').classList.remove('show');
+  document.getElementById('answerSheet').innerHTML=finalList.map((item,i)=>`<div>${i+1}. ${item.a}</div>`).join('');
+  document.getElementById('paperArea').classList.add('show');
+  document.getElementById('paperArea').scrollIntoView({behavior:'smooth'});
+}
+function toggleAnswer(){ document.getElementById('answerSheet').classList.toggle('show'); }
+</script>
+</body>
+</html>
