@@ -27,7 +27,6 @@ img,svg{display:block;}
   --safe-bottom:env(safe-area-inset-bottom,0px);
 }
 
-/* ===== 顶部导航 ===== */
 .topnav{min-height:72px;background:var(--canvas);box-shadow:0 2px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:50;display:flex;align-items:center;padding-top:var(--safe-top);}
 .topnav-inner{display:flex;align-items:center;gap:14px;width:100%;flex-wrap:nowrap;padding:10px 0;}
 .logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;color:var(--primary-dark);flex-shrink:0;}
@@ -50,7 +49,6 @@ img,svg{display:block;}
   .pill-btn{padding:8px 14px;font-size:13.5px;}
 }
 
-/* ===== HERO ===== */
 .hero{background:var(--canvas-warm);border-radius:0 0 var(--r-xxl) var(--r-xxl);padding:56px 24px 64px;text-align:center;position:relative;overflow:hidden;}
 .hero::before,.hero::after{content:'';position:absolute;border-radius:50%;opacity:.5;}
 .hero::before{width:180px;height:180px;background:var(--sky-d);top:-60px;left:-40px;}
@@ -77,7 +75,6 @@ img,svg{display:block;}
 .btn-warning:active{box-shadow:0 2px 0 #D48806;}
 @media(max-width:480px){.btn-bubble{font-size:15px;padding:13px 26px;}}
 
-/* ===== 模块彩色分区 ===== */
 .section{padding:56px 0;}
 .section-head{text-align:center;margin-bottom:32px;}
 .section-head h2{font-size:clamp(22px,4vw,36px);color:var(--ink);margin-bottom:8px;}
@@ -135,13 +132,15 @@ footer .mascot-mini{width:40px;margin:0 auto 12px;}
 
 .m-content{flex:1;display:flex;overflow:hidden;min-height:0;}
 
-/* 左侧：图片查看区 */
+/* 左侧：图片查看区
+   关键修复：viewer-canvas 只负责 transform（缩放/平移），
+   实际尺寸约束直接写在 SVG 元素上，避免中间容器无尺寸导致内容消失 */
 .viewer-col{width:46%;flex-shrink:0;background:#F3F6FC;position:relative;display:flex;flex-direction:column;border-right:1px solid var(--hairline);min-height:0;}
 .viewer-wrap{flex:1;position:relative;overflow:hidden;touch-action:none;min-height:0;}
-.viewer-stage{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;}
-.viewer-canvas{transform-origin:center center;transition:transform .05s linear;will-change:transform;width:100%;}
+.viewer-stage{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
+.viewer-canvas{transform-origin:center center;transition:transform .05s linear;will-change:transform;line-height:0;}
 .viewer-canvas.snap{transition:transform .25s ease;}
-.viewer-canvas svg{display:block;width:100%;height:auto;background:#fff;border-radius:var(--r-lg);box-shadow:0 6px 24px rgba(0,0,0,.12);}
+.viewer-canvas svg{display:block;width:100%;max-width:100%;height:auto;background:#fff;border-radius:var(--r-lg);box-shadow:0 6px 24px rgba(0,0,0,.12);}
 .zoom-ctrl{position:absolute;right:14px;bottom:14px;display:flex;flex-direction:column;gap:7px;z-index:6;}
 .zoom-ctrl button{width:40px;height:40px;border-radius:50%;background:#fff;font-size:19px;font-weight:800;color:var(--ink-2);box-shadow:0 2px 8px rgba(0,0,0,.18);}
 .zoom-ctrl button:hover{background:var(--primary-soft);color:var(--primary-dark);}
@@ -154,7 +153,6 @@ footer .mascot-mini{width:40px;margin:0 auto 12px;}
 .mascot-strip .mm{width:38px;height:38px;flex-shrink:0;}
 .mascot-bubble{background:var(--primary-soft);border-radius:var(--r-lg);padding:9px 15px;font-size:13px;font-weight:700;color:var(--primary-dark);flex:1;}
 
-/* 右侧：内容区 —— 关键修复：min-height:0 保证 flex 子项能正确滚动 */
 .content-col{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0;}
 .tabs{display:flex;background:#fff;border-bottom:1px solid var(--hairline);flex-shrink:0;}
 .tabs button{flex:1;padding:15px 6px;font-size:14px;font-weight:800;background:transparent;color:var(--ink-soft);white-space:nowrap;border-bottom:3px solid transparent;}
@@ -196,11 +194,7 @@ footer .mascot-mini{width:40px;margin:0 auto 12px;}
 .swipe-hint-mobile{display:none;}
 
 /* =====================================================
-   移动端布局：改为上下堆叠、全屏、触摸优先
-   关键修复点：
-   1. modal-card 用 100dvh（动态视口高度）避免地址栏遮挡
-   2. 每一层 flex 容器都显式 min-height:0，否则内容区无法滚动
-   3. tab-body-wrap 独立可滚动，footer 用 safe-area 适配
+   移动端布局
    ===================================================== */
 @media(max-width:860px){
   #modal{padding:0;}
@@ -211,7 +205,8 @@ footer .mascot-mini{width:40px;margin:0 auto 12px;}
     height:100vh;
     height:100dvh;
   }
-  .m-header{padding-top:calc(10px + var(--safe-top));flex-shrink:0;}
+  .m-header{padding-top:calc(10px + var(--safe-top));flex-shrink:0;padding-left:14px;padding-right:14px;}
+  .m-header .m-title{font-size:15px;}
   .m-content{
     flex-direction:column;
     flex:1 1 auto;
@@ -220,19 +215,20 @@ footer .mascot-mini{width:40px;margin:0 auto 12px;}
   }
   .viewer-col{
     width:100%;
-    height:34vh;
-    min-height:190px;
-    max-height:280px;
+    height:42vh;
+    min-height:200px;
+    max-height:340px;
     flex:0 0 auto;
     border-right:none;
     border-bottom:1px solid var(--hairline);
   }
+  .viewer-stage{padding:10px;}
   .zoom-hint-desktop{display:none;}
-  .swipe-hint-mobile{display:block;text-align:center;color:var(--ink-soft);font-size:11px;padding:5px 0;background:#fff;font-weight:700;flex-shrink:0;}
-  .mascot-strip{padding:8px 14px;flex-shrink:0;}
-  .mascot-bubble{font-size:12px;padding:8px 13px;}
+  .swipe-hint-mobile{display:block;text-align:center;color:var(--ink-soft);font-size:10.5px;padding:4px 0;background:#fff;font-weight:700;flex-shrink:0;}
+  .mascot-strip{padding:7px 14px;flex-shrink:0;}
+  .mascot-bubble{font-size:11.5px;padding:7px 12px;}
+  .mascot-strip .mm{width:32px;height:32px;}
 
-  /* 内容列必须是 flex 且 min-height:0，才能让 tab-body-wrap 正确滚动 */
   .content-col{
     flex:1 1 auto;
     min-height:0;
@@ -241,31 +237,32 @@ footer .mascot-mini{width:40px;margin:0 auto 12px;}
     overflow:hidden;
   }
   .tabs{flex-shrink:0;}
-  .tabs button{padding:12px 4px;font-size:12.5px;}
+  .tabs button{padding:11px 4px;font-size:12px;}
   .tab-body-wrap{
     flex:1 1 auto;
     min-height:0;
     overflow-y:auto;
     -webkit-overflow-scrolling:touch;
   }
-  .tab-body{padding:16px 16px 24px;font-size:14px;}
+  .tab-body{padding:14px 14px 20px;font-size:13.5px;}
 
   .m-footer{
     flex:0 0 auto;
-    padding:10px 16px calc(10px + var(--safe-bottom));
+    padding:8px 14px calc(8px + var(--safe-bottom));
   }
-  #prevBtn,#nextBtn{width:36px;height:56px;font-size:20px;}
-  .zoom-ctrl button{width:36px;height:36px;font-size:16px;}
+  .progress-row{margin-bottom:8px;}
+  .action-row button{padding:10px;font-size:13px;}
+  #prevBtn,#nextBtn{width:34px;height:52px;font-size:18px;}
+  .zoom-ctrl{right:10px;bottom:10px;}
+  .zoom-ctrl button{width:34px;height:34px;font-size:15px;}
 }
 @media(min-width:861px){
   .side-arrow{display:flex;}
 }
 
-/* ===== 星星弹出动画 ===== */
 .star-pop{position:fixed;pointer-events:none;font-size:32px;z-index:999;animation:starpop .8s ease forwards;}
 @keyframes starpop{0%{transform:translateY(0) scale(0.5);opacity:1;}60%{transform:translateY(-60px) scale(1.3);opacity:1;}100%{transform:translateY(-100px) scale(0.8);opacity:0;}}
 
-/* ===== 组卷弹层 ===== */
 #quizModal{position:fixed;inset:0;background:rgba(30,35,60,.55);z-index:300;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;backdrop-filter:blur(4px);}
 #quizModal.show{display:block;}
 .quiz-inner{max-width:880px;margin:24px auto;padding:0 16px 60px;}
@@ -384,7 +381,7 @@ footer .mascot-mini{width:40px;margin:0 auto 12px;}
         </div>
       </div>
       <div class="zoom-hint-desktop">🖱️ 滚轮缩放 · 拖拽已放大图片 · 双击放大/还原 · 左右箭头翻页</div>
-      <div class="swipe-hint-mobile">👈 左右滑动图片翻页 · 双指缩放 · 双击放大 👉</div>
+      <div class="swipe-hint-mobile">👈 滑动翻页 · 双指缩放 · 双击放大/缩小 👉</div>
       <div class="mascot-strip">
         <svg class="mm" viewBox="0 0 60 60"><circle cx="30" cy="32" r="22" fill="#4A90D9"/><circle cx="22" cy="28" r="5" fill="#fff"/><circle cx="38" cy="28" r="5" fill="#fff"/><circle cx="22" cy="29" r="2.5" fill="#1F2937"/><circle cx="38" cy="29" r="2.5" fill="#1F2937"/><path d="M20,40 Q30,48 40,40" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
         <div class="mascot-bubble" id="mascotMsg">数小萌：一起来学习这个知识点吧！</div>
@@ -845,6 +842,7 @@ document.addEventListener('keydown',e=>{
 
 /* ---------- 无极缩放 + 拖拽 + 滑动翻页 ---------- */
 let scale=1, tx=0, ty=0;
+const MIN_SCALE=0.5, MAX_SCALE=5;
 let pinchStartDist=0, pinchStartScale=1;
 let dragging=false, dragStartX=0, dragStartY=0, dragOrigX=0, dragOrigY=0;
 let swipeStartX=0, swipeStartY=0, swipeStartT=0, isSwipeCandidate=false, movedForZoom=false;
@@ -854,7 +852,7 @@ function applyTransform(snap){
   viewerCanvas.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
 }
 function resetZoomState(){ scale=1; tx=0; ty=0; applyTransform(true); }
-function zoomBy(f){ scale=Math.min(5,Math.max(1,scale*f)); if(scale===1){tx=0;ty=0;} applyTransform(true); }
+function zoomBy(f){ scale=Math.min(MAX_SCALE,Math.max(MIN_SCALE,scale*f)); if(scale===1){tx=0;ty=0;} applyTransform(true); }
 function resetZoom(){ resetZoomState(); }
 function dist(t0,t1){ return Math.hypot(t0.clientX-t1.clientX, t0.clientY-t1.clientY); }
 
@@ -865,7 +863,7 @@ viewerWrap.addEventListener('touchstart',e=>{
     pinchStartScale=scale;
     isSwipeCandidate=false;
   } else if(e.touches.length===1){
-    if(scale>1.02){
+    if(scale>1.02 || scale<0.98){
       dragging=true;
       dragStartX=e.touches[0].clientX; dragStartY=e.touches[0].clientY;
       dragOrigX=tx; dragOrigY=ty;
@@ -883,7 +881,7 @@ viewerWrap.addEventListener('touchmove',e=>{
   if(e.touches.length===2){
     e.preventDefault();
     const d=dist(e.touches[0],e.touches[1]);
-    scale=Math.min(5,Math.max(1,pinchStartScale*(d/pinchStartDist)));
+    scale=Math.min(MAX_SCALE,Math.max(MIN_SCALE,pinchStartScale*(d/pinchStartDist)));
     applyTransform(false);
     movedForZoom=true;
   } else if(e.touches.length===1){
@@ -926,13 +924,13 @@ viewerWrap.addEventListener('touchend',e=>{
 viewerWrap.addEventListener('wheel',e=>{
   e.preventDefault();
   const f=e.deltaY<0?1.12:1/1.12;
-  scale=Math.min(5,Math.max(1,scale*f));
+  scale=Math.min(MAX_SCALE,Math.max(MIN_SCALE,scale*f));
   if(scale===1){tx=0;ty=0;}
   applyTransform(false);
 },{passive:false});
 let mouseDragging=false, mdx=0, mdy=0, mox=0, moy=0;
 viewerWrap.addEventListener('mousedown',e=>{
-  if(scale<=1.02)return;
+  if(scale<=1.02 && scale>=0.98)return;
   mouseDragging=true; mdx=e.clientX; mdy=e.clientY; mox=tx; moy=ty;
 });
 window.addEventListener('mousemove',e=>{
